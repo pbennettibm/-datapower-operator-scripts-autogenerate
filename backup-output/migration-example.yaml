@@ -14,10 +14,10 @@ spec:
     accessLevel: privileged
     passwordSecret: admin-credentials
   domains:
-    - name: example
+    - name: default
       certs:
       - certType: usrcerts
-        secret: datapower-gitops-secret
+        secret: my-crypto-secret
       dpApp:
         config:
         - default-cfg
