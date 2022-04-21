@@ -1,11 +1,11 @@
 zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 
 for file in $zipfiles; do
-  if [ -f "$file-output" ] ; then
+  if [ -f "${file}-output" ] ; then
     rm -r $file-output
   fi
 
-  if [ -f "$file-unpack" ] ; then
+  if [ -f "${file}-unpack" ] ; then
     rm -r $file-unpack
   fi
 
