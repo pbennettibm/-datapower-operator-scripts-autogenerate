@@ -1,10 +1,13 @@
-echo `git diff --name-only | grep -E '.zip$' `
-zipfiles=`git diff --name-only | grep -E '.zip$' `
+zipfiles=`git diff HEAD --name-only | grep -E '.zip$'`
+echo zipfiles
 
 for file in $zipfiles; do
-  rm -r $file-output
-  rm -r $file-unpack
-  ./migrate-backup.sh $file.zip
-  git add $file-unpack
-  git add $file-output
+  if [[ -f $file.zip ]]; then
+    echo "extracting resources from ${file}.zip"
+    rm -r $file-output
+    rm -r $file-unpack
+    ./migrate-backup.sh $file.zip
+    git add $file-unpack
+    git add $file-output
+  fi
 done
