@@ -1,9 +1,9 @@
-rm -r backup-output
+zipfiles=`git diff --name-only | grep -E '.zip$' `
 
-rm -r backup-unpack
-
-./migrate-backup.sh backup.zip
-
-git add backup-unpack
-
-git add backup-output
+for file in $zipfiles; do
+  rm -r $file-output
+  rm -r $file-unpack
+  ./migrate-backup.sh $file.zip
+  git add $file-unpack
+  git add $file-output
+done
