@@ -1,0 +1,9 @@
+rm -r backup-output
+
+rm -r backup-unpack
+
+./migrate-backup.sh backup.zip
+
+git add backup-unpack
+
+git add backup-output
