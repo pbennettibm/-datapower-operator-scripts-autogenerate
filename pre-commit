@@ -1,3 +1,4 @@
+echo `git diff --name-only | grep -E '.zip$' `
 zipfiles=`git diff --name-only | grep -E '.zip$' `
 
 for file in $zipfiles; do
