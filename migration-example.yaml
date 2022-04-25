@@ -12,12 +12,12 @@ spec:
   users:
   - name: admin
     accessLevel: privileged
-    passwordSecret: admin-credentials
+    passwordSecret: datapower-user
   domains:
     - name: default
       certs:
       - certType: usrcerts
-        secret: my-crypto-secret
+        secret: datapower-cert
       dpApp:
         config:
         - default-cfg
