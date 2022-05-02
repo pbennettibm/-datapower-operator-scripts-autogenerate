@@ -3,7 +3,7 @@ kind: DataPowerService
 metadata:
   name: migration-example
 spec:
-  replicas: 3
+  replicas: 1
   version: 10.0-cd
   license:
     accept: true
@@ -12,12 +12,12 @@ spec:
   users:
   - name: admin
     accessLevel: privileged
-    passwordSecret: admin-credentials
+    passwordSecret: datapower-user
   domains:
     - name: default
       certs:
       - certType: usrcerts
-        secret: my-crypto-secret
+        secret: datapower-cert
       dpApp:
         config:
         - default-cfg
