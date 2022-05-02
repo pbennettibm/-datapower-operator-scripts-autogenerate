@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: example-service
+  namespace: migration-test
+spec:
+  selector:
+    app.kubernetes.io/instance: migration-test-migration-example
+  ports:
+    - name: mpgw
+      protocol: TCP
+      port: 8001
+      targetPort: 8001
