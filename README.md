@@ -2,11 +2,18 @@
 
 Home of utility scripts for automating datapower-operator tasks.
 
+## Add git pre commit hook for `migrate-backup.sh`
+
+```
+cp pre-commit .git/hooks/pre-commit; chmod ug+x .git/hooks/pre-commit
+```
+
 ## `must-gather.sh`
 
 Use this script to gather all DataPower Operator related resources from your Kubernetes/OpenShift cluster.
 
 For usage:
+
 ```
 ./must-gather.sh -h
 ```
