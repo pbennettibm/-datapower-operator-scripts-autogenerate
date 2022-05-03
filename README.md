@@ -8,7 +8,7 @@ Home of utility scripts for automating datapower-operator tasks.
 git config core.hooksPath .githooks
 ```
 
-# Then Depending on your OS:
+### Then depending on your OS:
 
 Mac
 ```
@@ -19,7 +19,16 @@ Windows
 ```
 icacls .githooks/pre-commit /grant *S-1-1-0:F
 ```
-Note: You may have to use the full path on Windows to correctly authorize the hook to run.  We haven't had the ability to test this yet.
+**Note: You may have to use the full path on Windows to correctly authorize the hook to run.  We haven't had the ability to test this yet.**
+
+#### Please do not rename any zip files to ensure the git hook works correctly.
+
+Instead:
+1. Move the file out of this repo's directory
+2. Commit the changes
+3. Rename the moved file
+4. Move it back to this repo's directory
+5. Commit the changes
 
 ## `must-gather.sh`
 
