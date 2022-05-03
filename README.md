@@ -5,8 +5,21 @@ Home of utility scripts for automating datapower-operator tasks.
 ## Add git pre commit hook for `migrate-backup.sh`
 
 ```
-cp pre-commit .git/hooks/pre-commit; chmod ug+x .git/hooks/pre-commit
+git config core.hooksPath .githooks
 ```
+
+# Then Depending on your OS:
+
+Mac
+```
+chmod ug+x .githooks/pre-commit
+```
+
+Windows
+```
+icacls .githooks/pre-commit /grant *S-1-1-0:F
+```
+Note: You may have to use the full path on Windows to correctly authorize the hook to run.  We haven't had the ability to test this yet.
 
 ## `must-gather.sh`
 
