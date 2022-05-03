@@ -10,18 +10,18 @@ git config core.hooksPath .githooks
 
 ### Then depending on your OS:
 
-Mac
+- Mac
 ```
 chmod ug+x .githooks/pre-commit
 ```
 
-Windows
+- Windows
 ```
 icacls .githooks/pre-commit /grant *S-1-1-0:F
 ```
-**Note: You may have to use the full path on Windows to correctly authorize the hook to run.  We haven't had the ability to test this yet.**
+*Note: You may have to use the full path on Windows to correctly authorize the hook to run.  We haven't had the ability to test this yet.*
 
-#### Please do not rename any zip files to ensure the git hook works correctly.
+### Please do not rename any zip files to ensure the git hook works correctly.
 
 Instead:
 1. Move the file out of this repo's directory
