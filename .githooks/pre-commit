@@ -8,29 +8,18 @@ for file in $zipfiles; do
       rm -r $file
     fi
 
-    if [ -d "${file}-unpack" ] ; then
-      rm -r $file-unpack
-    fi
-
     echo "extracting resources from ${file}.zip"
     ./migrate-backup.sh $file.zip
-    git add $file-unpack
-    git add $file
+    git add -r $file
   else
     if [ -d "${file}" ] ; then
       rm -r $file
       git rm -r $file
     fi
-
-    if [ -d "${file}-unpack" ] ; then
-      rm -r $file-unpack
-      git rm -r $file-unpack
-    fi
   fi
 done
 
 yamlfiles=`git diff HEAD --name-only | grep -E '.yaml'`
-echo $yamlfiles
 
 cd ..
 
