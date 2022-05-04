@@ -31,11 +31,36 @@ done
 
 yamlfiles=`git diff HEAD --name-only | grep -E '.yaml'`
 echo $yamlfiles
+cd ..
 
 for file in $yamlfiles; do
-  if [[ -f $file ]]; then
-    echo "${file}-added"
+  if [[ -f "/datapower-operator-scripts/${file}" ]]; then
+    if [[ "$file" == *-dps* ]]; then
+      cp -u "/datapower-operator-scripts/${file}" /multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/
+    elif [[ "$file" == *-service* ]]; then
+      cp -u "/datapower-operator-scripts/${file}" /multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/
+    elif [[ "$file" == *-route* ]]; then
+      cp -u "/datapower-operator-scripts/${file}" /multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/
+    elif [[ "$file" == *default* ]]; then
+      cp -u "/datapower-operator-scripts/${file}" /multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/
+    fi
   else
-    echo "${file}-deleted"
+    if [[ "$file" == *-dps* ]]; then
+      if [[ -f "/multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/${file}" ]]; then
+        rm "/multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/${file}"
+      fi
+    elif [[ "$file" == *-service* ]]; then
+      if [[ -f "/multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/${file}" ]]; then
+        rm "/multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/${file}"
+      fi
+    elif [[ "$file" == *-route* ]]; then
+      if [[ -f "/multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${file}" ]]; then
+        rm "/multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${file}"
+      fi
+    elif [[ "$file" == *default* ]]; then
+      if [[ -f "/multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${file}" ]]; then
+        rm "/multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${file}"
+      fi
+    fi 
   fi
 done
