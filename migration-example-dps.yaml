@@ -3,7 +3,7 @@ kind: DataPowerService
 metadata:
   name: migration-example
 spec:
-  replicas: 5
+  replicas: 6
   version: 10.0-cd
   license:
     accept: true
