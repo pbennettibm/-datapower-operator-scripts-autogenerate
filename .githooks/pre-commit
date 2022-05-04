@@ -47,8 +47,9 @@ for file in $yamlfiles; do
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${file} created"
     elif [[ "$file" == *default* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
-      echo $array
-      yes | cp -f "./datapower-operator-scripts/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/
+      echo $array[0]
+      echo $array[1]
+      yes | cp -f "./datapower-operator-scripts/${array[0]}-${array[1]}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${file} created"
     fi
   else
@@ -68,9 +69,12 @@ for file in $yamlfiles; do
         echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${file} deleted"
       fi
     elif [[ "$file" == *default* ]]; then
-      if [[ -f "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${file}" ]]; then
-        rm "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${file}"
-        echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${file} deleted"
+      array=($(echo "$file" | tr '/' '\n'))
+      echo $array[0]
+      echo $array[1]
+      if [[ -f "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[1]}" ]]; then
+        rm "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[1]}"
+        echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[1]} deleted"
       fi
     fi 
   fi
