@@ -30,6 +30,7 @@ for file in $zipfiles; do
 done
 
 yamlfiles=`git diff HEAD --name-only | grep -E '.yaml'`
+echo $yamlfiles
 
 cd ..
 
