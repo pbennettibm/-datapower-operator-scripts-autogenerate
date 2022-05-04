@@ -30,8 +30,9 @@ for file in $zipfiles; do
 done
 
 yamlfiles=`git diff HEAD --name-only | grep -E '.yaml'`
+echo $yamlfiles
 
-for file in $zipfiles; do
+for file in $yamlfiles; do
   if [[ -f $file ]]; then
     echo "${file}-added"
   else
