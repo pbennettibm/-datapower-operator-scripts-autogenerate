@@ -10,7 +10,7 @@ for file in $zipfiles; do
 
     echo "extracting resources from ${file}.zip"
     ./migrate-backup.sh $file.zip
-    git add -r $file
+    git add $file
   else
     if [ -d "${file}" ] ; then
       rm -r $file
