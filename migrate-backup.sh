@@ -58,7 +58,7 @@ error() {
 
 initialize_defaults() {
     if [[ -z "$UNPACK_DIR" ]]; then
-        UNPACK_DIR="${BACKUP_ZIP%.*}-unpack"
+        UNPACK_DIR="${BACKUP_ZIP%.*}"
     fi
 
     if [[ -z "$OUTPUT_DIR" ]]; then
