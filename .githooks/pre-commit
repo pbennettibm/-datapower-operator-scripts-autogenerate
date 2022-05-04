@@ -46,7 +46,9 @@ for file in $yamlfiles; do
       yes | cp -f "./datapower-operator-scripts/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${file} created"
     elif [[ "$file" == *default* ]]; then
-      yes | cp -f "./datapower-operator-scripts/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/
+      array=($(echo "$file" | tr '/' '\n'))
+      echo $array
+      mk dir -p "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}" && yes | cp -f "./datapower-operator-scripts/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${file} created"
     fi
   else
