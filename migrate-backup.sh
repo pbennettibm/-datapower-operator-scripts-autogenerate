@@ -58,11 +58,11 @@ error() {
 
 initialize_defaults() {
     if [[ -z "$UNPACK_DIR" ]]; then
-        UNPACK_DIR="${BACKUP_ZIP%.*}-unpack"
+        UNPACK_DIR="./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-unpack"
     fi
 
     if [[ -z "$OUTPUT_DIR" ]]; then
-        OUTPUT_DIR="${BACKUP_ZIP%.*}"
+        OUTPUT_DIR="./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output"
     fi
 }
 
