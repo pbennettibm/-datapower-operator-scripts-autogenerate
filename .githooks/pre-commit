@@ -32,6 +32,7 @@ done
 yamlfiles=`git diff HEAD --name-only | grep -E '.yaml'`
 echo $yamlfiles
 cd ..
+pwd
 
 for file in $yamlfiles; do
   if [[ -f "/datapower-operator-scripts/${file}" ]]; then
