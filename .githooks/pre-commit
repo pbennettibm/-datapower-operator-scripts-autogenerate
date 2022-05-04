@@ -28,3 +28,13 @@ for file in $zipfiles; do
     fi
   fi
 done
+
+yamlfiles=`git diff HEAD --name-only | grep -E '.yaml'`
+
+for file in $zipfiles; do
+  if [[ -f $file ]]; then
+    echo "${file}-added"
+  else
+    echo "${file}-deleted"
+  fi
+done
