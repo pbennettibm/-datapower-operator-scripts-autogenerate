@@ -178,7 +178,7 @@ process_domain() {
                 --from-file="${OUTPUT_DIR}/default.cfg" \
                 --dry-run="client" \
                 --output="yaml" > $OUTPUT_DIR/default-cfg.yaml
-                echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"320\"" >> $OUTPUT_DIR/default-cfg.yaml
+            echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"320\"" >> $OUTPUT_DIR/default-cfg.yaml
             echo "Generated: ${OUTPUT_DIR}/default-cfg.yaml"
         else
             echo "Iterating over domain config: ${domain_config}"
