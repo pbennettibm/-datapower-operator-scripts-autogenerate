@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #define parameters which are passed in.
 NAME=$1
@@ -8,13 +8,15 @@ cat  << EOF
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: mpgw
-  namespace: $NAME-route
+  annotations:
+    argocd.argoproj.io/sync-wave: "370"
+  name: $NAME-route
+  namespace: datapower-instance
 spec:
   to:
     kind: Service
     name: $NAME-service
     weight: 100
   port:
-    targetPort: mpgw
+    targetPort: $NAME-mpgw
 EOF

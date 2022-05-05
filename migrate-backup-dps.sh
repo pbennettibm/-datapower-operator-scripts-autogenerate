@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #define parameters which are passed in.
 NAME=$1
@@ -8,6 +8,8 @@ cat  << EOF
 apiVersion: datapower.ibm.com/v1beta3
 kind: DataPowerService
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "350"
   name: $NAME-migration
 spec:
   replicas: 3
@@ -19,12 +21,12 @@ spec:
   users:
   - name: admin
     accessLevel: privileged
-    passwordSecret: admin-credentials
+    passwordSecret: datapower-user
   domains:
     - name: default
       certs:
       - certType: usrcerts
-        secret: my-crypto-secret
+        secret: datapower-cert
       dpApp:
         config:
         - $NAME-default-cfg
