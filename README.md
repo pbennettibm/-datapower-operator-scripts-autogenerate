@@ -11,19 +11,23 @@ git config core.hooksPath .githooks
 ### Then depending on your OS:
 
 - Mac
+
 ```
-chmod ug+x .githooks/pre-commit
+chmod ug+x .githooks/pre-commit migrate-backup-dps.sh migrate-backup-route.sh migrate-backup-service.sh
 ```
 
 - Windows
+
 ```
-icacls .githooks/pre-commit /grant *S-1-1-0:F
+icacls .githooks/pre-commit migrate-backup-dps.sh migrate-backup-route.sh migrate-backup-service.sh /grant *S-1-1-0:F
 ```
-*Note: You may have to use the full path on Windows to correctly authorize the hook to run.  We haven't had the ability to test this yet.*
+
+_Note: You may have to use the full path on Windows to correctly authorize the hook to run. We haven't had the ability to test this yet._
 
 ### Please do not rename any zip files to ensure the git hook works correctly.
 
 Instead:
+
 1. Move the file out of this repo's directory
 2. Commit the changes
 3. Rename the moved file

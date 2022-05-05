@@ -189,6 +189,7 @@ process_domain() {
                     --from-file="${OUTPUT_DIR}/${domain}.cfg" \
                     --dry-run="client" \
                     --output="yaml" > $OUTPUT_DIR/$domain-cfg.yaml
+                echo -e `  annotations: \n    argocd.argoproj.io/sync-wave: "320"` >> $OUTPUT_DIR/$domain-cfg.yaml
                 echo "Generated: ${OUTPUT_DIR}/${domain}-cfg.yaml"
             done
         fi
@@ -203,6 +204,7 @@ process_domain() {
             --from-file="${OUTPUT_DIR}/${domain}-local.tar.gz" \
             --dry-run="client" \
             --output="yaml" > $OUTPUT_DIR/$domain-local.yaml
+        echo -e `  annotations: \n    argocd.argoproj.io/sync-wave: "310"` >> $OUTPUT_DIR/$domain-local.yaml
         echo "Generated: ${OUTPUT_DIR}/${domain}-local.yaml"
     fi
 }
