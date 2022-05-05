@@ -35,18 +35,22 @@ for file in $yamlfiles; do
       array=($(echo "$file" | tr '/' '\n'))
       yes | cp -f "./datapower-operator-scripts/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/${array[1]} created"
+      echo -e "- datapower/${array[1]}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
     elif [[ "$file" == *-service* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
       yes | cp -f "./datapower-operator-scripts/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/${array[1]} created"
+      echo -e "- service/${array[1]}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
     elif [[ "$file" == *-route* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
       yes | cp -f "./datapower-operator-scripts/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${array[1]} created"
+      echo -e "- route/${array[1]}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
     elif [[ "$file" == *default* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
       yes | cp -f "./datapower-operator-scripts/${file}" "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[2]}"
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[2]} created"
+      echo -e "- configmap/${array[0]}-${array[2]}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
     fi
   else
     if [[ "$file" == *-dps* ]]; then
@@ -54,24 +58,28 @@ for file in $yamlfiles; do
       if [[ -f "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/${array[1]}" ]]; then
         rm "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/${array[1]}"
         echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/${array[1]} deleted"
+        sed "|datapower/${array[1]}|d" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
       fi
     elif [[ "$file" == *-service* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
       if [[ -f "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/${array[1]}" ]]; then
         rm "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/${array[1]}"
         echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/${array[1]} deleted"
+        sed "|service/${array[1]}|d" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
       fi
     elif [[ "$file" == *-route* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
       if [[ -f "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${array[1]}" ]]; then
         rm "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${array[1]}"
         echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${array[1]} deleted"
+        sed "|route/${array[1]}|d" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
       fi
     elif [[ "$file" == *default* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
       if [[ -f "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[2]}" ]]; then
         rm "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[2]}"
         echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[2]} deleted"
+        sed "|configmap/${array[0]}-${array[2]}|d" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
       fi
     fi 
   fi
