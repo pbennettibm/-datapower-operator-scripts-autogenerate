@@ -188,7 +188,9 @@ process_domain() {
                 kubectl create configmap ${domain_norm}-cfg \
                     --from-file="${OUTPUT_DIR}/${domain}.cfg" \
                     --dry-run="client" \
-                    --output="yaml" > $OUTPUT_DIR/$domain-cfg.yaml
+                    --output="yaml" > $OUTPUT_DIR/$domain-cfg-space.yaml
+                printf %s "$(< $OUTPUT_DIR/$domain-cfg-space.yaml)" > $OUTPUT_DIR/$domain-cfg.yaml
+                rm $OUTPUT_DIR/$domain-cfg-space.yaml
                 echo -e `  annotations: \n    argocd.argoproj.io/sync-wave: "320"` >> $OUTPUT_DIR/$domain-cfg.yaml
                 echo "Generated: ${OUTPUT_DIR}/${domain}-cfg.yaml"
             done
@@ -203,7 +205,9 @@ process_domain() {
         kubectl create configmap ${domain_norm}-local \
             --from-file="${OUTPUT_DIR}/${domain}-local.tar.gz" \
             --dry-run="client" \
-            --output="yaml" > $OUTPUT_DIR/$domain-local.yaml
+            --output="yaml" > $OUTPUT_DIR/$domain-local-space.yaml
+        printf %s "$(< $OUTPUT_DIR/$domain-local-space.yaml)" > $OUTPUT_DIR/$domain-local.yaml
+        rm $OUTPUT_DIR/$domain-local-space.yaml
         echo -e `  annotations: \n    argocd.argoproj.io/sync-wave: "310"` >> $OUTPUT_DIR/$domain-local.yaml
         echo "Generated: ${OUTPUT_DIR}/${domain}-local.yaml"
     fi
