@@ -1,0 +1,25 @@
+apiVersion: datapower.ibm.com/v1beta3
+kind: DataPowerService
+metadata:
+  name: validation-flow-migration
+spec:
+  replicas: 3
+  version: 10.0-cd
+  license:
+    accept: true
+    use: nonproduction
+    license: L-RJON-CCCP46
+  users:
+  - name: admin
+    accessLevel: privileged
+    passwordSecret: admin-credentials
+  domains:
+    - name: default
+      certs:
+      - certType: usrcerts
+        secret: my-crypto-secret
+      dpApp:
+        config:
+        - validation-flow-default-cfg
+        local:
+        - validation-flow-default-local
