@@ -22,6 +22,9 @@ for file in $zipfiles; do
   fi
 done
 
+# For GitOps interaction with the multi-tenancy-gitops-apps repo
+# Comment this section out if not using GitOps
+
 yamlfiles=`git diff HEAD --name-only | grep -E '.yaml'`
 
 cd ..
