@@ -9,6 +9,7 @@ UNPACK_DIR=""
 DOMAINS=()
 DOMAIN=""
 OUTPUT_DIR=""
+SYNC_WAVE_COUNT=321
 
 #############
 # Functions #
@@ -58,11 +59,11 @@ error() {
 
 initialize_defaults() {
     if [[ -z "$UNPACK_DIR" ]]; then
-        UNPACK_DIR="${BACKUP_ZIP%.*}-unpack"
+        UNPACK_DIR="./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-unpack"
     fi
 
     if [[ -z "$OUTPUT_DIR" ]]; then
-        OUTPUT_DIR="${BACKUP_ZIP%.*}-output"
+        OUTPUT_DIR="./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output"
     fi
 }
 
@@ -177,6 +178,7 @@ process_domain() {
                 --from-file="${OUTPUT_DIR}/default.cfg" \
                 --dry-run="client" \
                 --output="yaml" > $OUTPUT_DIR/default-cfg.yaml
+            echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"320\"" >> $OUTPUT_DIR/default-cfg.yaml
             echo "Generated: ${OUTPUT_DIR}/default-cfg.yaml"
         else
             echo "Iterating over domain config: ${domain_config}"
@@ -189,7 +191,9 @@ process_domain() {
                     --from-file="${OUTPUT_DIR}/${domain}.cfg" \
                     --dry-run="client" \
                     --output="yaml" > $OUTPUT_DIR/$domain-cfg.yaml
+                echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain-cfg.yaml
                 echo "Generated: ${OUTPUT_DIR}/${domain}-cfg.yaml"
+                SYNC_WAVE_COUNT=$((SYNC_WAVE_COUNT+1))
             done
         fi
     fi
@@ -203,6 +207,7 @@ process_domain() {
             --from-file="${OUTPUT_DIR}/${domain}-local.tar.gz" \
             --dry-run="client" \
             --output="yaml" > $OUTPUT_DIR/$domain-local.yaml
+        echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"310\"" >> $OUTPUT_DIR/$domain-local.yaml
         echo "Generated: ${OUTPUT_DIR}/${domain}-local.yaml"
     fi
 }

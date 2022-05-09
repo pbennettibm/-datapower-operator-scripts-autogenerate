@@ -1,7 +1,9 @@
 apiVersion: datapower.ibm.com/v1beta3
 kind: DataPowerService
 metadata:
-  name: migration-example
+  annotations:
+    argocd.argoproj.io/sync-wave: "350"
+  name: validation-flow-migration
 spec:
   replicas: 1
   version: 10.0-cd
@@ -20,6 +22,6 @@ spec:
         secret: datapower-cert
       dpApp:
         config:
-        - default-cfg
+        - validation-flow-default-cfg
         local:
-        - default-local
+        - validation-flow-default-local

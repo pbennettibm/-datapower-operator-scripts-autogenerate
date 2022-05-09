@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "360"
+  name: validation-flow-service
+  namespace: datapower-instance
+spec:
+  selector:
+    app.kubernetes.io/instance: datapower-instance-validation-flow-migration
+  ports:
+    - name: validation-flow-mpgw
+      protocol: TCP
+      port: 8001
+      targetPort: 8001
