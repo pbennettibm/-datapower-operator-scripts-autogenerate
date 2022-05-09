@@ -1,94 +1,30 @@
-#!/bin/bash
+#!/bin/sh
 
 zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 
 for file in $zipfiles; do
   if [[ -f $file.zip ]]; then
-    if [ -d "${file}" ] ; then
-      rm -r $file
+    if [ -d "${file}-output" ] ; then
+      rm -r $file-output
+    fi
+
+    if [ -d "${file}-unpack" ] ; then
+      rm -r $file-unpack
     fi
 
     echo "extracting resources from ${file}.zip"
     ./migrate-backup.sh $file.zip
-    ./migrate-backup-dps.sh $file > ./$file/$file-dps.yaml
-    ./migrate-backup-service.sh $file 8001 > ./$file/$file-service.yaml
-    ./migrate-backup-route.sh $file > ./$file/$file-route.yaml
-    git add $file
+    git add $file-unpack
+    git add $file-output
   else
-    if [ -d "${file}" ] ; then
-      rm -r $file
-      git rm -r $file
+    if [ -d "${file}-output" ] ; then
+      rm -r $file-output
+      git rm -r $file-output
     fi
-  fi
-done
 
-# For GitOps interaction with the multi-tenancy-gitops-apps repo
-# Comment this section out if not using GitOps
-
-yamlfiles=`git diff HEAD --name-only | grep -E '.yaml'`
-
-cd ..
-
-for file in $yamlfiles; do
-  if [[ -f "./datapower-operator-scripts/${file}" ]]; then
-    if [[ "$file" == *-dps* ]]; then
-      array=($(echo "$file" | tr '/' '\n'))
-      yes | cp -f "./datapower-operator-scripts/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/
-      echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/${array[1]} created"
-      echo -e "- datapower/${array[1]}" >> ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
-    elif [[ "$file" == *-service* ]]; then
-      array=($(echo "$file" | tr '/' '\n'))
-      yes | cp -f "./datapower-operator-scripts/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/
-      echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/${array[1]} created"
-      echo -e "- service/${array[1]}" >> ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
-    elif [[ "$file" == *-route* ]]; then
-      array=($(echo "$file" | tr '/' '\n'))
-      yes | cp -f "./datapower-operator-scripts/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/
-      echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${array[1]} created"
-      echo -e "- route/${array[1]}" >> ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
-    elif [[ "$file" == *default* ]]; then
-      array=($(echo "$file" | tr '/' '\n'))
-      yes | cp -f "./datapower-operator-scripts/${file}" "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[2]}"
-      echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[2]} created"
-      echo -e "- configmap/${array[0]}-${array[2]}" >> ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
+    if [ -d "${file}-unpack" ] ; then
+      rm -r $file-unpack
+      git rm -r $file-unpack
     fi
-  else
-    if [[ "$file" == *-dps* ]]; then
-      array=($(echo "$file" | tr '/' '\n'))
-      if [[ -f "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/${array[1]}" ]]; then
-        rm "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/${array[1]}"
-        echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/${array[1]} deleted"
-        grep -v  "datapower/${array[1]}" \
-        ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml > \
-        temp && mv temp ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
-      fi
-    elif [[ "$file" == *-service* ]]; then
-      array=($(echo "$file" | tr '/' '\n'))
-      if [[ -f "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/${array[1]}" ]]; then
-        rm "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/${array[1]}"
-        echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/${array[1]} deleted"
-        grep -v  "service/${array[1]}" \
-        ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml > \
-        temp && mv temp ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
-      fi
-    elif [[ "$file" == *-route* ]]; then
-      array=($(echo "$file" | tr '/' '\n'))
-      if [[ -f "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${array[1]}" ]]; then
-        rm "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${array[1]}"
-        echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${array[1]} deleted"
-        grep -v  "route/${array[1]}" \
-        ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml > \
-        temp && mv temp ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
-      fi
-    elif [[ "$file" == *default* ]]; then
-      array=($(echo "$file" | tr '/' '\n'))
-      if [[ -f "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[2]}" ]]; then
-        rm "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[2]}"
-        echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[2]} deleted"
-        grep -v  "configmap/${array[0]}-${array[2]}" \
-        ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml > \
-        temp && mv temp ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
-      fi
-    fi 
   fi
 done

@@ -27,7 +27,6 @@ _Note: You may have to use the full path on Windows to correctly authorize the h
 ### Please do not rename any zip files to ensure the git hook works correctly.
 
 Instead:
-
 1. Move the file out of this repo's directory
 2. Commit the changes
 3. Rename the moved file
