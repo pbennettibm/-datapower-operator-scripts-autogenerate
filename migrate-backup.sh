@@ -179,6 +179,7 @@ process_domain() {
                 --dry-run="client" \
                 --output="yaml" > $OUTPUT_DIR/default-cfg.yaml
             echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"320\"" >> $OUTPUT_DIR/default-cfg.yaml
+            sed -i '' 's/name: default-cfg/name: validation-flow-default-cfg/g' $OUTPUT_DIR/$domain-cfg.yaml
             echo "Generated: ${OUTPUT_DIR}/default-cfg.yaml"
         else
             echo "Iterating over domain config: ${domain_config}"
@@ -192,6 +193,7 @@ process_domain() {
                     --dry-run="client" \
                     --output="yaml" > $OUTPUT_DIR/$domain-cfg.yaml
                 echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain-cfg.yaml
+                sed -i '' 's/name: default-cfg/name: validation-flow-default-cfg/g' $OUTPUT_DIR/$domain-cfg.yaml
                 echo "Generated: ${OUTPUT_DIR}/${domain}-cfg.yaml"
                 SYNC_WAVE_COUNT=$((SYNC_WAVE_COUNT+1))
             done
@@ -208,6 +210,7 @@ process_domain() {
             --dry-run="client" \
             --output="yaml" > $OUTPUT_DIR/$domain-local.yaml
         echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"310\"" >> $OUTPUT_DIR/$domain-local.yaml
+        sed -i '' 's/name: default-local/name: validation-flow-default-local/g' $OUTPUT_DIR/$domain-local.yaml
         echo "Generated: ${OUTPUT_DIR}/${domain}-local.yaml"
     fi
 }
