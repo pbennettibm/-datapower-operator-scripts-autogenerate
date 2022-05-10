@@ -11,7 +11,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "370"
   name: $NAME-route
-  namespace: datapower-instance
+  namespace: $NAME-migration
 spec:
   to:
     kind: Service
