@@ -7,7 +7,7 @@ PORT=$2
 #define the template.
 cat  << EOF
 kind: Service
-apiVersion: v1
+apiVersion: route.openshift.io/v1
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "360"
@@ -15,7 +15,7 @@ metadata:
   namespace: $NAME-migration
 spec:
   selector:
-    app.kubernetes.io/instance: datapower-instance-$NAME-migration
+    app.kubernetes.io/instance: $NAME-migration-$NAME-migration
   ports:
     - name: $NAME-mpgw
       protocol: TCP
