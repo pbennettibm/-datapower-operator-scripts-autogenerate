@@ -7,7 +7,7 @@ PORT=$2
 #define the template.
 cat  << EOF
 kind: Service
-apiVersion: route.openshift.io/v1
+apiVersion: v1
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "360"
