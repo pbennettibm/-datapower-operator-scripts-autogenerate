@@ -45,7 +45,13 @@ Instead:
 
 **Instructions**
 
-1.
+1. Install the IBM DataPower catalog source to expose the operator.
+2. Install the DataPower operator on all namespaces using the Web Console.
+  
+3. Create a new project namespace to deploy your instance to.
+```
+oc new-project <namespace>
+```
 
 ### Instructions for deploying DataPower on OCS with GitOps
 
