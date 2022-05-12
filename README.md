@@ -66,7 +66,8 @@ Instead:
 
 **Instructions**
 
-1.
+1. Add and commit a DataPower backup zip to this repository if you have not already done so.
+2. Refer to the instructions in [multi-tenancy-gitops-apps]()
 
 ## Debugging
 
