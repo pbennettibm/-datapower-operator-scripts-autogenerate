@@ -45,10 +45,17 @@ Instead:
 
 **Instructions**
 
-1. Install the IBM DataPower catalog source to expose the operator.
+1. Install the IBM DataPower catalog source to expose the operator using the CLI.
+```
+oc apply -f ibm-datapower-operator-catalog.yaml
+```
 2. Install the DataPower operator on all namespaces using the Web Console.
-  
-3. Create a new project namespace to deploy your instance to.
+  - Under the "Administrator" tab select "Operators" and then "OperatorHub".
+  - In the search bar provided search for `datapower`.
+  - Select "IBM DataPower GateWay".
+  - Select "Install" and keep all defaults
+    - Make sure you are installing on all namespaces  
+3. Create a new project namespace to deploy your instance to using the CLI.
 ```
 oc new-project <namespace>
 ```
