@@ -20,7 +20,7 @@ git config core.hooksPath .githooks
       icacls .githooks/pre-commit migrate-backup-dps.sh migrate-backup-route.sh migrate-backup-service.sh /grant *S-1-1-0:F
       ```
       _Note: You may have to use the full path on Windows to correctly authorize the hook to run. We haven't had the ability to test this yet._
-2. If planning on deploying with GitOps at any stage, clone the [multi-tenancy-gitops-apps]() repo into the parent directory of where this repo is currently located on your local machine.
+2. If planning on deploying with GitOps at any stage, clone the [multi-tenancy-gitops-apps](https://github.com/DataPower-on-Azure/multi-tenancy-gitops-apps) repo into the parent directory of where this repo is currently located on your local machine.
 
 **Checking in DataPower backup zip files**
 1. Write git commits after adding DataPower backup zip into the root of this repo.
@@ -33,7 +33,7 @@ Instead:
 4. Move the renamed zip file back to this repo's directory
 5. Add & commit the changes.
 
-### Instructions for deploying DataPower on OCS with GitOps
+### Instructions for deploying DataPower manually on OCS
 
 **Pre-reqs**
 
@@ -64,7 +64,7 @@ oc new-project <namespace>
 
 **Pre-reqs**
 
-1. Clone the [multi-tenancy-gitops-apps]() repo into the parent directory of where this repo is currently located on your local machine.
+1. Clone the [multi-tenancy-gitops-apps](https://github.com/DataPower-on-Azure/multi-tenancy-gitops-apps) repo into the parent directory of where this repo is currently located on your local machine.
   - If you have already commited a zip file that you wish to use before cloning the above repo for the first time, please:
     - Move the zip file out of this repo's directory
     - Add & commit the changes
@@ -80,7 +80,7 @@ oc new-project <namespace>
 **Instructions**
 
 1. Add and commit a DataPower backup zip to this repository if you have not already done so.
-2. Refer to the instructions in [multi-tenancy-gitops-apps]()
+2. Refer to the instructions in [multi-tenancy-gitops-apps](https://github.com/DataPower-on-Azure/multi-tenancy-gitops-apps)
 
 ## Debugging
 
