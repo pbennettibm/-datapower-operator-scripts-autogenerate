@@ -22,8 +22,8 @@ git config core.hooksPath .githooks
       _Note: You may have to use the full path on Windows to correctly authorize the hook to run. We haven't had the ability to test this yet._
 2. If planning on deploying with GitOps at any stage, clone the [multi-tenancy-gitops-apps](https://github.com/DataPower-on-Azure/multi-tenancy-gitops-apps) repo into the parent directory of where this repo is currently located on your local machine.
 
-**Checking in DataPower backup zip files**
-1. Write git commits after adding DataPower backup zip into the root of this repo.
+**Checking in/out DataPower backup zip files**
+1. Write git commits after adding or removing DataPower backup zip files into the root of this repo.
 
 **Please do not rename any zip files to ensure the git hook works correctly.**
 Instead:
