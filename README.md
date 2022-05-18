@@ -56,9 +56,9 @@ oc apply -f ibm-datapower-operator-catalog.yaml
   - Select "Install" and keep all defaults
     - Make sure you are installing on all namespaces  
 3. Create a new project namespace to deploy your instance to using the CLI.
-  - The namespace needs to be the name of your zip file
+  - The namespace needs to be the name of your zip file then "-migration".
 ```
-oc new-project <zip-file-name>
+oc new-project <"zip-file-name"-migration>
 ```
 
 ### Instructions for deploying DataPower on OCS with GitOps
