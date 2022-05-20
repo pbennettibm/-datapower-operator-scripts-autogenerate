@@ -6,7 +6,7 @@ Home of utility scripts for automating datapower-operator tasks.
 
 **Pre-Reqs**
 
-1. Config git pre commit hook to run scripts.
+1. Config the git pre-commit hook to run scripts in this repo.
 ```
 git config core.hooksPath .githooks
 ```
