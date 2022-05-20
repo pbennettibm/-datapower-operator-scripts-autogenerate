@@ -6,10 +6,11 @@ Home of utility scripts for automating datapower-operator tasks.
 
 **Pre-Reqs**
 
-1. Config the git pre-commit hook to run scripts in this repo.
-```
-git config core.hooksPath .githooks
-```
+1. Config the git pre-commit hook to run scripts.
+  - Inside the root of this repo run
+    ```
+    git config core.hooksPath .githooks
+    ```
   - Then depending on your OS:
     - Mac
       ```
@@ -46,9 +47,10 @@ Instead:
 **Instructions**
 
 1. Install the IBM DataPower catalog source to expose the operator using the CLI.
-```
-oc apply -f ibm-datapower-operator-catalog.yaml
-```
+  - Inside the root of this repo run
+    ```
+    oc apply -f ibm-datapower-operator-catalog.yaml
+    ```
 2. Install the DataPower operator on all namespaces using the Web Console.
   - Under the "Administrator" tab select "Operators" and then "OperatorHub".
   - In the search bar provided search for `datapower`.
@@ -57,9 +59,9 @@ oc apply -f ibm-datapower-operator-catalog.yaml
     - Make sure you are installing on all namespaces  
 3. Create a new project namespace to deploy your instance to using the CLI.
   - The namespace needs to be the name of your zip file then "-migration".
-```
-oc new-project <"zip-file-name"-migration>
-```
+    ```
+    oc new-project <"zip-file-name"-migration>
+    ```
 
 ### Instructions for deploying DataPower on OCS with GitOps
 
