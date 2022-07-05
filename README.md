@@ -58,10 +58,10 @@ Instead:
   - Select "Install" and keep all defaults
     - Make sure you are installing on all namespaces  
 3. Create a new project namespace to deploy your instance to using the CLI.
-  - The namespace needs to be the name of your zip file then "-migration".
-    ```
-    oc new-project <zip-file-name>-migration
-    ```
+  ```
+  oc new-project <zip-file-name>-manual
+  ```
+  _Note: You can title the namespace to anything you want but it should not be the name of your zip file then "-migration" as that should be reserved for DevOps deployment.
 4. Go into the "backup-output" folder and apply the domain configmaps.
   ```
   cd <zip-file-name>
