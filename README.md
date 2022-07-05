@@ -78,7 +78,7 @@ Instead:
   - These will be located in the mounted volume from the previous step in the [DataPower-install](https://github.com/DataPower-on-Azure/DataPower-install) repo.
   - If your keys are formatted as .cert/.key then run this command.
     ```
-   oc create secret tls <my-tls-secret> --key=/path/to/my.crt --cert=/path/to/my.key
+    oc create secret tls <my-tls-secret> --key=/path/to/my.crt --cert=/path/to/my.key
     ```
   - If they are not then run this command instead.
     ```
