@@ -77,13 +77,13 @@ Instead:
 6. Gather the keys and certificates you wish to use and create a secret from them.
   - These will be located in the mounted volume from the previous step in the [DataPower-install](https://github.com/DataPower-on-Azure/DataPower-install) repo.
   - If your keys are formatted as .cert/.key then run this command.
-  ```
-  oc create secret tls <my-tls-secret> --key=/path/to/my.crt --cert=/path/to/my.key
-  ```
+    ```
+   oc create secret tls <my-tls-secret> --key=/path/to/my.crt --cert=/path/to/my.key
+    ```
   - If they are not then run this command instead.
-  ```
-  oc create secret generic <my-crypto-secret> --from-file=/path/to/cert --from-file=/path/to/key
-  ```
+    ```
+    oc create secret generic <my-crypto-secret> --from-file=/path/to/cert --from-file=/path/to/key
+    ```
 7. Create an admin user credential secret.
   ```
   oc create secret generic admin-credentials --from-literal=password=admin
@@ -103,9 +103,9 @@ Instead:
   ```
 11. Either use the OpenShift web console or the command line to get the route's address.
   - If using the command line.
-  ```
-  oc get route
-  ```
+    ```
+    oc get route
+    ```
 
 ### Instructions for deploying DataPower on OCS with GitOps
 
