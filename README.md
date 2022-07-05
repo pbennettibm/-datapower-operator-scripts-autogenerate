@@ -61,7 +61,8 @@ Instead:
   ```
   oc new-project <zip-file-name>-manual
   ```
-   _Note: You can title the namespace to anything you want but it should not be the name of your zip file then "-migration" as that should be reserved for DevOps deployment._
+  _Note: You can title the namespace to anything you want but it should not be the name of your zip file then "-migration" as that should be reserved for DevOps deployment._
+  
 4. Go into the "backup-output" folder and apply the domain configmaps.
   ```
   cd <zip-file-name>
