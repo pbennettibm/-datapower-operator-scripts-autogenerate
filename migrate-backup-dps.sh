@@ -10,10 +10,10 @@ kind: DataPowerService
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "350"
-  name: $NAME-migration
+  name: $NAME-instance
 spec:
   replicas: 3
-  version: 10.0-cd
+  version: 10.5-lts
   license:
     accept: true
     use: nonproduction

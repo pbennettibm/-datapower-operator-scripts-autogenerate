@@ -15,7 +15,7 @@ metadata:
   namespace: $NAME-migration
 spec:
   selector:
-    app.kubernetes.io/instance: $NAME-migration-$NAME-migration
+    app.kubernetes.io/instance: $NAME-migration-$NAME-instance
   ports:
     - name: $NAME-mpgw
       protocol: TCP
