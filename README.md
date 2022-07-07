@@ -169,7 +169,7 @@ Instead:
 
 2. (Optional) Refer to the instructions in [multi-tenancy-gitops-apps](https://github.com/DataPower-on-Azure/multi-tenancy-gitops-apps) if attempting the GitOps deployment on your own.
 
-3. Change directories to the multi-tenancy-gitops-apps repo in the terminal and commit the new files and changes that have been automatically made.
+3. Change directories to the `multi-tenancy-gitops-apps` repo in the terminal and commit the new files and changes that have been automatically made.
   - If your configuration is complex and changes need to be made please examine the files located in the `/dp/environments/dev/datapower` folders.
 
 ## Debugging
