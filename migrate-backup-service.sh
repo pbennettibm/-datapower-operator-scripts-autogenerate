@@ -1,8 +1,17 @@
 #!/bin/bash
 
 #define parameters which are passed in.
-NAME=$1
-PORT=$2
+NAME=$1; shift
+PORTS=$@
+
+PORTLIST=$(
+  for PORT in {$PORTS}; do
+    echo "    - name: $NAME-$PORT";
+    echo "      protocol: TCP";
+    echo "      port: $PORT";
+    echo "      targetPort: $PORT";
+  done;
+)
 
 #define the template.
 cat  << EOF
@@ -17,8 +26,5 @@ spec:
   selector:
     app.kubernetes.io/instance: $NAME-migration-$NAME-instance
   ports:
-    - name: $NAME-mpgw
-      protocol: TCP
-      port: $PORT
-      targetPort: $PORT
+$PORTLIST
 EOF

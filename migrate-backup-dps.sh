@@ -17,7 +17,7 @@ spec:
   license:
     accept: true
     use: nonproduction
-    license: L-RJON-CCCP46
+    license: L-RJON-CCAT5F
   users:
   - name: admin
     accessLevel: privileged
