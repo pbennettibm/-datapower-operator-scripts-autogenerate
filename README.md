@@ -160,9 +160,17 @@ Instead:
 
 **Instructions**
 
-1. Add and commit a DataPower backup zip to this repository if you have not already done so.
+1. Add and commit a DataPower backup zip to this repository.
+  - If you already have the zip file commited:
+    1. Move the zip file out of this repo's directory
+    2. Add & commit the changes
+    3. Move the zip file back to this repo's directory
+    4. Add & commit the changes.
 
-2. Refer to the instructions in [multi-tenancy-gitops-apps](https://github.com/DataPower-on-Azure/multi-tenancy-gitops-apps)
+2. (Optional) Refer to the instructions in [multi-tenancy-gitops-apps](https://github.com/DataPower-on-Azure/multi-tenancy-gitops-apps) if attempting the GitOps deployment on your own.
+
+3. Change directories to the multi-tenancy-gitops-apps repo in the terminal and commit the new files and changes that have been automatically made.
+  - If your configuration is complex and changes need to be made please examine the files located in the `/dp/environments/dev/datapower` folders.
 
 ## Debugging
 
