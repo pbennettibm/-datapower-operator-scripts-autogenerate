@@ -73,16 +73,16 @@ Instead:
   - These will be located in the mounted volume from the previous step in the [DataPower-install](https://github.com/DataPower-on-Azure/DataPower-install) repo.
   - If your keys are formatted as .cert/.key then run this command.
     ```
-    oc create secret tls <my-tls-secret> --key=/path/to/my.crt --cert=/path/to/my.key
+    oc create secret tls datapower-cert --key=/path/to/my.crt --cert=/path/to/my.key
     ```
   - If they are not then run this command instead.
     ```
-    oc create secret generic <my-crypto-secret> --from-file=/path/to/cert --from-file=/path/to/key
+    oc create secret generic datapower-cert --from-file=/path/to/cert --from-file=/path/to/key
     ```
 
 6. Create an admin user credential secret.
   ```
-  oc create secret generic admin-credentials --from-literal=password=admin
+  oc create secret generic datapower-user --from-literal=password=admin
   ```
 
 7. Create a secret to pull the DataPower image from the IBM registry.
