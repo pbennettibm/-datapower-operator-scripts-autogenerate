@@ -104,7 +104,7 @@ Instead:
 8. Go into the "backup-output" folder and apply the domain configmaps.
   ```
   cd <zip-file-name>
-  cd <zip-file-name>-output
+  cd <zip-file-name>/<zip-file-name>-output
   oc apply -f default-cfg.yaml
   oc apply -f default-local.yaml
   ```
@@ -117,7 +117,6 @@ Instead:
 
 10. Create the DataPowerService resource in the cluster.
   ```
-  cd ..
   oc apply -f <zip-file-name>-dps.yaml
   ```
 
@@ -132,12 +131,13 @@ Instead:
   ```
 
 13. Either use the OpenShift web console or the command line to get the route's address.
+  - If using the web console, under the "Administrator" tab go to "Networking" and then select "Routes".
   - If using the command line.
     ```
     oc get route
     ```
 
-14. Navigate to the route's address and the/a specific port required to ensure that your DataPower instance is working.
+14. Navigate to the route's address to ensure that your DataPower instance is working.
 
 ### Instructions for deploying DataPower on OCS with GitOps
 
