@@ -88,13 +88,13 @@ Instead:
 7. Create a secret to pull the DataPower image from the IBM registry.
   - If attempting to run in any enivornment besides "nonproduction" refer to [Pulling images from the IBM Entitled Registry](https://www.ibm.com/docs/en/datapower-operator/1.6?topic=features-entitled-registry) for instructions.
   - If using an [IBM Entitlement Key](https://myibm.ibm.com/products-services/containerlibrary)
-  ```
-  oc create secret docker-registry \
-    ibm-entitlement-key \
-    --docker-username=cp \
-    --docker-password=<entitlement-key> \
-    --docker-server=cp.icr.io
-  ```
+    ```
+    oc create secret docker-registry \
+      ibm-entitlement-key \
+      --docker-username=cp \
+      --docker-password=<entitlement-key> \
+      --docker-server=cp.icr.io
+    ```
   _Note: This is the most common usage._
   - If you want to use a custom Service Account, read the official documentation and edit the appropriate fields in the generated <zipfile>/<zipfile>-dps.yaml file according to the links below.
     - [Pulling images from the IBM Entitled Registry](https://www.ibm.com/docs/en/datapower-operator/1.6?topic=features-entitled-registry) - scroll to "Using a custom Service Account"
@@ -179,6 +179,6 @@ For usage:
 
 Reference:
 
-- [Guide: Domain configuration](https://ibm.github.io/datapower-operator-doc/guides/domain-configuration)
-- [DataPowerService API docs](https://ibm.github.io/datapower-operator-doc/apis/datapowerservice/v1beta3)
+- [Guide: Domain configuration](https://www.ibm.com/docs/en/datapower-operator/1.6?topic=guides-domain-configuration)
+- [DataPowerService API docs](https://www.ibm.com/docs/en/datapower-operator/1.6)
 
