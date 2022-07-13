@@ -1,6 +1,6 @@
 #!/bin/bash
 
-declare -a portarr=("8001")
+declare -a portarr=("5611", "9090")
 
 zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 
