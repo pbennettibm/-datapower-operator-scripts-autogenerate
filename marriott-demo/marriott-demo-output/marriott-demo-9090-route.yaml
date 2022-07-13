@@ -1,0 +1,14 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "370"
+  name: marriott-demo-9090-route
+  namespace: marriott-demo-migration
+spec:
+  to:
+    kind: Service
+    name: marriott-demo-service
+    weight: 100
+  port:
+    targetPort: marriott-demo-9090
