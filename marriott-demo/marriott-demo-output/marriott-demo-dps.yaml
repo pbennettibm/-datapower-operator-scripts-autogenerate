@@ -1,0 +1,27 @@
+apiVersion: datapower.ibm.com/v1beta3
+kind: DataPowerService
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "350"
+  name: marriott-demo-instance
+spec:
+  replicas: 3
+  version: 10.5-lts
+  license:
+    accept: true
+    use: nonproduction
+    license: L-RJON-CCAT5F
+  users:
+  - name: admin
+    accessLevel: privileged
+    passwordSecret: datapower-user
+  domains:
+    - name: default
+      certs:
+      - certType: usrcerts
+        secret: datapower-cert
+      dpApp:
+        config:
+        - marriott-demo-default-cfg
+        local:
+        - marriott-demo-default-local

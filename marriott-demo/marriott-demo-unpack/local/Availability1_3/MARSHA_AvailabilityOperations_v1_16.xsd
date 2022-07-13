@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 (x64) (http://www.altova.com) by Madhukiran Katamaneni (Marriott International) -->
+<!--
+		Modification History:
+		===============
+			Verson 1.4	Jan2012 MARV 18228 Cash&Points - Neil Dixon
+								Updated MARSHA_CommonTypes to v1_11
+			Verson 1.5	Oct2012 ResStrategy Tk 7 - MPA enhancement
+								Updated MARSHA_CommonTypes to v1_13
+			Verson 1.6	Apr2013 ResStrategy Tk 7 - GAA enhancement - Chris Stoltz
+								Updated MARSHA_CommonTypes to v1_16
+            Verson 1.7    Nov2013 WG# 19021 - GPMS Project - Gowtham R
+                                Updated MARSHA_CommonTypes to v1_18 
+            Verson 1.8    Mar2015 WG# 19342 - Drive Direct Corporate Bookings - Anand Pl
+                                Updated MARSHA_CommonTypes to v1_24 
+            Version 1.9   WG# 19460 12/10/2015 - Modified by - Sathishkumar Munusamy
+                                New Error message for M.com MPA - 
+								Changed the type of AvailabilityStatus/@RoomStayType to xs:string from RateIndicatorType in CommonTypes
+           Version  1.10  Jan2016 WG#19560 - Guest Age Based Pricing - Anand Pl
+                                Updated MARSHA_CommonTypes to v1_28
+                                Added ResGuests element to GetAvailabilityResponse
+                                Added ResGuests element to GetAvailabilityMP_Response
+                                Added ResGuests element to GetAlternateAvailabilityResponse
+           Version  1.11  Apr2016 WG#19535 - ERS2 Project Availbility Changes - Madhukiran Katamaneni
+                                Updated MARSHA_CommonTypes to v1_30
+                                Added RatePlans/RatePlan/@PreferencesLimit
+	                            Added RatePlans/RatePlan/@AutoPreferenceCount
+            Version 1.12  Sep2016 WG#19535 - ERS2 Project Availability Changes - Madhukiran Katamaneni
+								Updated MARSHA CommonTypes to v1_32
+            Version 1.13  Apr2017 WG#20015 - RAM Release 3 and Engage Support - Anand Palani
+								Updated MARSHA CommonTypes to v1_35
+            Version 1.14  May2017 WG#20011 - SilverPony - Kartikey Patel
+								Updated MARSHA CommonTypes to v1_37
+            Version 1.15  Feb2019 WG#20430 - GDS API Enablement - Ankit Agarwal
+								Updated MARSHA CommonTypes to v1_41
+                                Added new field - Inventories element in the response to send back Inventory Count
+			Version 1.16  Dec2019 WG#20749 -  Full Price Display - Abhinay R
+								Updated MARSHA CommonTypes to v1_43
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://marsha.marriott.com/services/Availability/v1" targetNamespace="http://marsha.marriott.com/services/Availability/v1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="MARSHA_CommonTypes_v1_43.xsd"/>
+	<xs:include schemaLocation="Marriott_Common_Service_v1_0.xsd"/>
+	<xs:element name="GetLowestRateCalendar">
+		<xs:annotation>
+			<xs:documentation>Requests Lowest Rate at a property across a calendar range of potential check-in dates</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type"/>
+				<xs:element name="OperationProfile" type="OperationProfileType"/>
+				<xs:element name="Availability" type="AvailabilityType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetLowestRateCalendarResponse">
+		<xs:annotation>
+			<xs:documentation>Response for a GetLowestRateCalendar request</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Success" type="SuccessType"/>
+				<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+				<xs:element name="Hotels" type="HotelsType" minOccurs="0"/>
+				<xs:element name="RatePlans" type="RatePlansType" minOccurs="0"/>
+				<xs:element name="RoomStays" type="RoomStaysType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="ResGuest" type="ResGuestType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetGroupAvailability">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type"/>
+				<xs:element name="OperationProfile" type="OperationProfileType"/>
+				<xs:element name="Availability" type="AvailabilityType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetGroupAvailabilityResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Success" type="SuccessType"/>
+				<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+				<xs:element name="Availability" type="AvailabilityType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetAvailability">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Requests single property availability for a specified hotel code.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TransactionManager" type="TransactionManagerType" minOccurs="0"/>
+				<xs:element name="POS" type="POS_Type"/>
+				<xs:element name="OperationProfile" type="OperationProfileType"/>
+				<xs:element name="Availability" type="AvailabilityType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetAvailabilityResponse">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Returns available rates information for the input property. The response message may include Warnings from business processing rules, or Errors if the request did not succeed.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TransactionManager" type="TransactionManagerType" minOccurs="0"/>
+				<xs:element name="Success" type="SuccessType"/>
+				<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+				<xs:element name="Profiles" type="ProfilesType" minOccurs="0"/>
+				<xs:element name="Hotels" type="HotelsType" minOccurs="0"/>
+				<xs:element name="RoomTypes" type="RoomTypesType" minOccurs="0"/>
+				<xs:element name="RatePlans" type="RatePlansType" minOccurs="0"/>
+				<xs:element name="RoomStays" type="RoomStaysType" minOccurs="0"/>
+				<xs:element name="ResGuests" type="ResGuestsType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetAvailabilityMP">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Requests transient availability for a list of properties</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type"/>
+				<xs:element name="OperationProfile" type="OperationProfileType"/>
+				<xs:element name="Availability" type="AvailabilityType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetAvailabilityMP_Response">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Returns availability information, including rate ranges for available properties for all the input properties. The response message may include Warnings from business processing rules, or Errors if the request did not succeed.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TransactionManager" type="TransactionManagerType" minOccurs="0"/>
+				<xs:element name="Success" type="SuccessType"/>
+				<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+				<xs:element name="Profiles" type="ProfilesType" minOccurs="0"/>
+				<xs:element name="RoomStays" type="RoomStaysType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="ResGuests" type="ResGuestsType" minOccurs="0"/>
+				<xs:element name="InventoriesList" type="InventoriesListType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetAlternateAvailability">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Requests alternate property availability for a specified hotel code.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TransactionManager" type="TransactionManagerType" minOccurs="0"/>
+				<xs:element name="POS" type="POS_Type"/>
+				<xs:element name="OperationProfile" type="OperationProfileType"/>
+				<xs:element name="Availability" type="AvailabilityType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetAlternateAvailabilityResponse">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Returns alternate available rates information for the specified property. The response message may include Warnings from business processing rules, or Errors if the request did not succeed.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TransactionManager" type="TransactionManagerType" minOccurs="0"/>
+				<xs:element name="Success" type="SuccessType"/>
+				<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+				<xs:element name="Profiles" type="ProfilesType" minOccurs="0"/>
+				<xs:element name="Hotels" type="HotelsType" minOccurs="0"/>
+				<xs:element name="RoomStays" type="RoomStaysType" minOccurs="0"/>
+				<xs:element name="ResGuests" type="ResGuestsType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Ping" type="PingType">
+		<xs:annotation>
+			<xs:documentation>Standard operation called by SOAP/HTTP clients to check the health of a service.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PingResponse" type="PingResponseType">
+		<xs:annotation>
+			<xs:documentation>This element is returned to the client from the back end provider.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ApplicationFault">
+		<xs:annotation>
+			<xs:documentation>Generic Application SOAP Fault</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Errors" type="ErrorsType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MessageBodyValidationFailureFault" type="MessageBodyValidationFailureFaultType">
+		<xs:annotation>
+			<xs:documentation>This fault is returned to the client when there was a problem parsing the incoming XML</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DataValidationFailureFault" type="DataValidationFailureFaultType">
+		<xs:annotation>
+			<xs:documentation>This fault is returned to the client when there was invalid data passed to the Ping Service</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

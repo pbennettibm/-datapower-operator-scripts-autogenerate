@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Raj K (Marriott International) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:annotation>
+		<xsd:documentation>
+        ============================================================================
+        Date       Modified By      Change Description
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       v1_0:
+      2009-04-14 rkamb392 created the initial version  
+      ============================================================================
+       </xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="MessageBodyValidationFailureFaultType">
+		<xsd:annotation>
+			<xsd:documentation>
+              MessageBodyValidationFailureFault - The payload doesn't comply  
+              to schema, is not well formed, has schema validation errors 
+              (ex. using SAX), or has a root QName (namespace + local name) 
+              that is not known to the service. A fault is returned with 
+              whatever details are available to assist client in determining 
+              source of problem. This may include the schema validation 
+              errors, the QName information or the payload itself.  Schema 
+              validation will be enabled in development and possibly turned 
+              off in the higher environments. Ideally, it will always 
+              be enabled.
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ErrorCode" type="MessageBodyValidationFailureErrorCodeType"/>
+			<xsd:element name="ErrorString" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ErrorDetail" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ParseMessageList" type="ParseMessageListType" nillable="true"/>
+			<xsd:element name="Content" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ParseMessageListType">
+		<xsd:annotation>
+			<xsd:documentation>
+              Implementation of IBM's Array Wrapper pattern
+              to distinquish between an empty array and a null array.
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ParseMessage" type="ParseMessageType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ParseMessageType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Severity" type="xsd:string"/>
+			<xsd:element name="Message" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="PublicId" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="SystemId" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="LineNumber" type="xsd:int" minOccurs="0"/>
+			<xsd:element name="ColumnNumber" type="xsd:int" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="MessageBodyValidationFailureErrorCodeType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NonconformingContent"/>
+			<xsd:enumeration value="UnrecognizedQname"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="DataValidationFailureFaultType">
+		<xsd:annotation>
+			<xsd:documentation>
+              Conforms to schema but the input data fails 
+              an additional business edit or condition. An array of data 
+              validation errors is returned.
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ValidationErrorList" type="ValidationErrorListType" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ValidationErrorListType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ValidationError" type="ValidationErrorType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ValidationErrorType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ErrorCode" type="ValidationErrorCodeType"/>
+			<xsd:element name="ErrorString" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ValidationErrorCodeType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="ApplicationFaultType">
+		<xsd:annotation>
+			<xsd:documentation>
+              covers all other system-related exceptions such as a DB resource
+              failure or unexpected application exceptions (other than business
+              domain validation failures).
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Error" type="ApplicationErrorType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ApplicationErrorType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ErrorCode" type="ApplicationErrorCodeType"/>
+			<xsd:element name="ErrorString" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ErrorDetail" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ApplicationErrorCodeType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="SystemError"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ServiceUnavailableFaultType">
+		<xsd:annotation>
+			<xsd:documentation>
+              This fault indicates that the service is up 
+              but it is functionally unavailable. The error code, error 
+              string and error detail are all optional since the service
+              may not need to return any additional information to the 
+              client. since v_2_2
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ErrorCode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ErrorString" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ErrorDetail" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StaleDataFaultType">
+		<xsd:annotation>
+			<xsd:documentation>
+              Covers all stale data related exceptions.
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Error" type="StaleDataErrorType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StaleDataErrorType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ErrorCode" type="StaleDataErrorCodeType"/>
+			<xsd:element name="ErrorString" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ErrorDetail" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="StaleDataErrorCodeType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="StaleDataError"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
