@@ -6,22 +6,28 @@ metadata:
   name: marriott-second-try-instance
 spec:
   replicas: 3
-  version: 10.5-lts
+  version: 10.0-cd
   license:
     accept: true
     use: nonproduction
-    license: L-RJON-CCAT5F
+    license: L-RJON-CCCP46
   users:
   - name: admin
     accessLevel: privileged
     passwordSecret: datapower-user
   domains:
     - name: default
-      certs:
-      - certType: usrcerts
-        secret: datapower-cert
       dpApp:
         config:
-        - marriott-second-try-default-cfg
+        - validation-flow-default-cfg
         local:
-        - marriott-second-try-default-local
+        - validation-flow-default-local
+    - name: dev_marsha
+      certs:
+      - certType: usrcerts
+        secret: marsha-cert
+      dpApp:
+        config:
+        - dev-marsha-cfg
+        local:
+        - dev-marsha-local

@@ -12,3 +12,6 @@ spec:
     weight: 100
   port:
     targetPort: marriott-second-try-9090
+  tls:
+    termination: passthrough
+  wildcardPolicy: None

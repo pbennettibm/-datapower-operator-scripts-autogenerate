@@ -9,10 +9,10 @@ spec:
   selector:
     app.kubernetes.io/instance: marriott-second-try-migration-marriott-second-try-instance
   ports:
-    - name: marriott-second-try-5611,
+    - name: marriott-second-try-5611
       protocol: TCP
-      port: 5611,
-      targetPort: 5611,
+      port: 5611
+      targetPort: 5611
     - name: marriott-second-try-9090
       protocol: TCP
       port: 9090

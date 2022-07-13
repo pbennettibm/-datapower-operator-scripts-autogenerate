@@ -13,11 +13,11 @@ metadata:
   name: $NAME-instance
 spec:
   replicas: 3
-  version: 10.5-lts
+  version: 10.0-cd
   license:
     accept: true
     use: nonproduction
-    license: L-RJON-CCAT5F
+    license: L-RJON-CCCP46
   users:
   - name: admin
     accessLevel: privileged
