@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+		Modification History:
+		===============
+			Verson 1.4	Jan2012 MARV 18228 Cash&Points - Neil Dixon
+								Updated MARSHA_AvailabilityOperations to v1_4
+			Verson 1.5	Jul2012 ResStrategy - MPA Enhancement
+								Updated MARSHA_AvailabilityOperations to v1_5
+			Verson 1.6	Apr2013 ResStrategy - Get Alternate Availability Enhancement
+								Updated MARSHA_AvailabilityOperations to v1_6
+                                
+            Version 1.7    Nov2013 WG# 19021 - GPMS Project - Gowtham R
+                                Updated MARSHA_AvailabilityOperations to v1_7
+
+            Version 1.8    Mar2015 WG# 19342 - Drive Direct Corporate Bookings - Anand Pl
+                                Updated MARSHA_AvailabilityOperations to v1_8
+
+            Version 1.9   WG# 19460 12/10/2015 - Modified by - Sathishkumar Munusamy
+                                New Error message for M.com MPA - 
+								Changed the type of AvailabilityStatus/@RoomStayType to xs:string from RateIndicatorType in CommonTypes
+            Version 1.10  Jan2016 WG# 19560 - Guest Age Based Pricing - Anand Pl
+                                Updated MARSHA_AvailabilityOperations to v1_10
+            Version 1.11  Apr2016 WG# 19535 -  ERS2 Project  - Madhukiran Katamaneni
+		                Updated MARSHA_AvailabilityOperations to v1_11
+            Version 1.12  Sep2016 WG# 19535 -  ERS2 Project - Madhukiran Katamaneni
+		                Updated MARSHA_AvailabilityOperations to v1_12
+            Version 1.13  Apr2017 WG# 20015 -  RAM Release 3 and Engage Support - Anand Palani
+		                Updated MARSHA_AvailabilityOperations to v1_13
+            Version 1.14  May2017 WG# 20011 -  SilverPony- Kartikey Patel
+		                Updated MARSHA_AvailabilityOperations to v1_14
+            Version 1.15  Feb2019 WG# 20430 -  GDS API Enablement - Ankit Agarwal
+		                Updated MARSHA_AvailabilityOperations to v1_15
+			Version 1.16  Dec2019 WG#20749 -  Full Price Display - Abhinay R
+								Updated MMARSHA_AvailabilityOperations to v1_16
+-->  
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:svc="http://marsha.marriott.com/services/Availability/v1" xmlns:tns="http://marsha.marriott.com/services/Availability/ws/v1" targetNamespace="http://marsha.marriott.com/services/Availability/ws/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://marsha.marriott.com/services/Availability/v1 MARSHA_AvailabilityOperations_v1_16.xsd">
+	<wsdl:types>
+		<xs:schema>
+			<xs:import namespace="http://marsha.marriott.com/services/Availability/v1" schemaLocation="MARSHA_AvailabilityOperations_v1_16.xsd"/>
+		</xs:schema>
+	</wsdl:types>
+	<!-- -->
+	<!-- Define the operations/messages of this service -->
+	<!-- Group Availability Lookup (used for creating mini-hotels) -->
+	<!-- -->
+	<wsdl:message name="GetGroupAvailability">
+		<wsdl:part name="GetGroupAvailability" element="svc:GetGroupAvailability"/>
+	</wsdl:message>
+	<!-- -->
+	<wsdl:message name="GetGroupAvailabilityResponse">
+		<wsdl:part name="GetGroupAvailabilityResponse" element="svc:GetGroupAvailabilityResponse"/>
+	</wsdl:message>
+	<!-- -->
+	<!--  Availability Lookup for a single property -->
+	<!-- -->
+	<wsdl:message name="GetAvailability">
+		<wsdl:part name="GetAvailability" element="svc:GetAvailability"/>
+	</wsdl:message>
+	<!-- -->
+	<wsdl:message name="GetAvailabilityResponse">
+		<wsdl:part name="GetAvailabilityResponse" element="svc:GetAvailabilityResponse"/>
+	</wsdl:message>
+	<!-- -->
+	<!--  Availability for multiple properties -->
+	<!-- -->
+	<wsdl:message name="GetAvailabilityMP">
+		<wsdl:part name="GetAvailabilityMP" element="svc:GetAvailabilityMP"/>
+	</wsdl:message>
+	<!-- -->
+	<wsdl:message name="GetAvailabilityMP_Response">
+		<wsdl:part name="GetAvailabilityMP_Response" element="svc:GetAvailabilityMP_Response"/>
+	</wsdl:message>
+	<!-- -->
+	<!--  Gets lowest rate for available room(s) across a calendar range. EffectiveDate and ExpireDate in the -->
+	<!-- request message represent potential check-in dates while NightDuration specifies length-of-stay. -->
+	<!-- -->
+	<wsdl:message name="GetLowestRateCalendar">
+		<wsdl:part name="GetLowestRateCalendar" element="svc:GetLowestRateCalendar"/>
+	</wsdl:message>
+	<!-- -->
+	<wsdl:message name="GetLowestRateCalendarResponse">
+		<wsdl:part name="GetLowestRateCalendarResponse" element="svc:GetLowestRateCalendarResponse"/>
+	</wsdl:message>
+		<!-- -->
+	<!--  Alternate Availability Lookup for a single property -->
+	<!-- -->
+	<wsdl:message name="GetAlternateAvailability">
+		<wsdl:part name="GetAlternateAvailability" element="svc:GetAlternateAvailability"/>
+	</wsdl:message>
+		<!-- -->
+	<wsdl:message name="GetAlternateAvailabilityResponse">
+		<wsdl:part name="GetAlternateAvailabilityResponse" element="svc:GetAlternateAvailabilityResponse"/>
+	</wsdl:message>
+	<!-- -->
+	<!-- Service Health Check -->
+	<!-- -->
+	<wsdl:message name="Ping">
+		<wsdl:part name="Ping" element="svc:Ping"/>
+	</wsdl:message>
+	<!-- -->
+	<wsdl:message name="PingResponse">
+		<wsdl:part name="PingResponse" element="svc:PingResponse"/>
+	</wsdl:message>
+	<!-- -->
+	<!-- Service Faults -->
+	<!-- -->
+	<wsdl:message name="ApplicationFault">
+		<wsdl:part name="ApplicationFault" element="svc:ApplicationFault"/>
+	</wsdl:message>
+	<!-- -->
+	<wsdl:message name="MessageBodyValidationFailureFault">
+		<wsdl:part name="MessageBodyValidationFailureFault" element="svc:MessageBodyValidationFailureFault"/>
+	</wsdl:message>
+	<!-- -->
+	<wsdl:message name="DataValidationFailureFault">
+		<wsdl:part name="DataValidationFailureFault" element="svc:DataValidationFailureFault"/>
+	</wsdl:message>
+	<!-- -->
+	<!-- Declare which port the messages go to -->
+	<!-- -->
+	<wsdl:portType name="AvailabilityPortType">
+		<!-- -->
+		<!-- GetGroupAvailability Operation -->
+		<!-- -->
+		<wsdl:operation name="GetGroupAvailability">
+			<wsdl:documentation>Gets the Availability associated with building a Mini-Hotel</wsdl:documentation>
+			<wsdl:input name="GetGroupAvailability" message="tns:GetGroupAvailability"/>
+			<wsdl:output name="GetGroupAvailabilityResponse" message="tns:GetGroupAvailabilityResponse"/>
+			<wsdl:fault name="MessageBodyValidationFailureFault" message="tns:MessageBodyValidationFailureFault"/>
+			<wsdl:fault name="DataValidationFailureFault" message="tns:DataValidationFailureFault"/>
+			<wsdl:fault name="ApplicationFault" message="tns:ApplicationFault"/>
+		</wsdl:operation>
+		<!-- -->
+		<!-- GetAvailability Operation -->
+		<!-- -->
+		<wsdl:operation name="GetAvailability">
+			<wsdl:documentation>Gets the list of available  rates at a property</wsdl:documentation>
+			<wsdl:input name="GetAvailability" message="tns:GetAvailability"/>
+			<wsdl:output name="GetAvailabilityResponse" message="tns:GetAvailabilityResponse"/>
+			<wsdl:fault name="MessageBodyValidationFailureFault" message="tns:MessageBodyValidationFailureFault"/>
+			<wsdl:fault name="DataValidationFailureFault" message="tns:DataValidationFailureFault"/>
+			<wsdl:fault name="ApplicationFault" message="tns:ApplicationFault"/>
+		</wsdl:operation>
+		<!-- -->
+		<!-- GetAvailabilityMP Operation -->
+		<!-- -->
+		<wsdl:operation name="GetAvailabilityMP">
+			<wsdl:documentation>Gets the rate ranges for available rates for multiple properties</wsdl:documentation>
+			<wsdl:input name="GetAvailabilityMP" message="tns:GetAvailabilityMP"/>
+			<wsdl:output name="GetAvailabilityMPResponse" message="tns:GetAvailabilityMP_Response"/>
+			<wsdl:fault name="MessageBodyValidationFailureFault" message="tns:MessageBodyValidationFailureFault"/>
+			<wsdl:fault name="DataValidationFailureFault" message="tns:DataValidationFailureFault"/>
+			<wsdl:fault name="ApplicationFault" message="tns:ApplicationFault"/>
+		</wsdl:operation>
+		<!-- -->
+		<!-- Availability HealthCheck Operation -->
+		<!-- -->
+		<wsdl:operation name="Ping">
+			<wsdl:documentation>Health check for the Availability Service</wsdl:documentation>
+			<wsdl:input name="Ping" message="tns:Ping"/>
+			<wsdl:output name="PingResponse" message="tns:PingResponse"/>
+			<wsdl:fault name="MessageBodyValidationFailureFault" message="tns:MessageBodyValidationFailureFault"/>
+			<wsdl:fault name="DataValidationFailureFault" message="tns:DataValidationFailureFault"/>
+			<wsdl:fault name="ApplicationFault" message="tns:ApplicationFault"/>
+		</wsdl:operation>
+		<!-- -->
+		<!-- GetLowestRateCalendar Operation -->
+		<!-- -->
+		<wsdl:operation name="GetLowestRateCalendar">
+			<wsdl:documentation>Gets the lowest rate and availability over a calendar range</wsdl:documentation>
+			<wsdl:input name="GetLowestRateCalendar" message="tns:GetLowestRateCalendar"/>
+			<wsdl:output name="GetLowestRateCalendarResponse" message="tns:GetLowestRateCalendarResponse"/>
+			<wsdl:fault name="MessageBodyValidationFailureFault" message="tns:MessageBodyValidationFailureFault"/>
+			<wsdl:fault name="DataValidationFailureFault" message="tns:DataValidationFailureFault"/>
+			<wsdl:fault name="ApplicationFault" message="tns:ApplicationFault"/>
+		</wsdl:operation>
+			<!-- -->
+	<!-- GetAlternateAvailability Operation -->
+	<!-- -->
+	<wsdl:operation name="GetAlternateAvailability">
+		<wsdl:documentation>Gets the list of alternate available properties</wsdl:documentation>
+		<wsdl:input name="GetAlternateAvailability" message="tns:GetAlternateAvailability"/>
+		<wsdl:output name="GetAlternateAvailabilityResponse" message="tns:GetAlternateAvailabilityResponse"/>
+		<wsdl:fault name="MessageBodyValidationFailureFault" message="tns:MessageBodyValidationFailureFault"/>
+		<wsdl:fault name="DataValidationFailureFault" message="tns:DataValidationFailureFault"/>
+		<wsdl:fault name="ApplicationFault" message="tns:ApplicationFault"/>
+	</wsdl:operation>
+	</wsdl:portType>
+	<!-- -->
+	<!-- Define the message protocol being used on that Port -->
+	<!-- -->
+	<wsdl:binding name="AvailabilityBinding" type="tns:AvailabilityPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<!-- -->
+		<!-- Use document style and not rpc-->
+		<!-- -->
+		<wsdl:operation name="GetGroupAvailability">
+			<soap:operation soapAction="GetGroupAvailability" style="document"/>
+			<wsdl:input name="GetGroupAvailability">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetGroupAvailabilityResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ApplicationFault">
+				<soap:fault name="ApplicationFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="MessageBodyValidationFailureFault">
+				<soap:fault name="MessageBodyValidationFailureFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="DataValidationFailureFault">
+				<soap:fault name="DataValidationFailureFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<!-- -->
+		<wsdl:operation name="GetAvailability">
+			<soap:operation soapAction="GetAvailability" style="document"/>
+			<wsdl:input name="GetAvailability">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetAvailabilityResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ApplicationFault">
+				<soap:fault name="ApplicationFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="MessageBodyValidationFailureFault">
+				<soap:fault name="MessageBodyValidationFailureFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="DataValidationFailureFault">
+				<soap:fault name="DataValidationFailureFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<!-- -->
+		<wsdl:operation name="GetAvailabilityMP">
+			<soap:operation soapAction="GetAvailabilityMP" style="document"/>
+			<wsdl:input name="GetAvailabilityMP">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetAvailabilityMPResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ApplicationFault">
+				<soap:fault name="ApplicationFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="MessageBodyValidationFailureFault">
+				<soap:fault name="MessageBodyValidationFailureFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="DataValidationFailureFault">
+				<soap:fault name="DataValidationFailureFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<!-- -->
+		<wsdl:operation name="Ping">
+			<soap:operation soapAction="Ping" style="document"/>
+			<wsdl:input name="Ping">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PingResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ApplicationFault">
+				<soap:fault name="ApplicationFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="MessageBodyValidationFailureFault">
+				<soap:fault name="MessageBodyValidationFailureFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="DataValidationFailureFault">
+				<soap:fault name="DataValidationFailureFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<!-- -->
+		<wsdl:operation name="GetLowestRateCalendar">
+			<soap:operation soapAction="GetLowestRateCalendar" style="document"/>
+			<wsdl:input name="GetLowestRateCalendar">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetLowestRateCalendarResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ApplicationFault">
+				<soap:fault name="ApplicationFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="MessageBodyValidationFailureFault">
+				<soap:fault name="MessageBodyValidationFailureFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="DataValidationFailureFault">
+				<soap:fault name="DataValidationFailureFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<!-- -->
+		<wsdl:operation name="GetAlternateAvailability">
+			<soap:operation soapAction="GetAlternateAvailability" style="document"/>
+			<wsdl:input name="GetAlternateAvailability">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetAlternateAvailabilityResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ApplicationFault">
+				<soap:fault name="ApplicationFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="MessageBodyValidationFailureFault">
+				<soap:fault name="MessageBodyValidationFailureFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="DataValidationFailureFault">
+				<soap:fault name="DataValidationFailureFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<!-- -->
+	<!-- Declare the MARSHA endpoint for connections -->
+	<!-- -->
+	<wsdl:service name="AvailabilityService">
+		<wsdl:port name="AvailabilitySoapPort" binding="tns:AvailabilityBinding">
+			<soap:address location="http://wdpdev.marriott.com:5600/MARSHA_Availability"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
