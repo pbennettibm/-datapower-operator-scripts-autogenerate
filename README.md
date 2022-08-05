@@ -1,4 +1,4 @@
-# Migration guide for DataPower from local Docker deployment to conatainerized pods running on OpenShift
+# Migration guide for DataPower from existing local Docker deployment to conatainerized pods running on OpenShift
 
 ## Instuctions
 
@@ -20,12 +20,12 @@
       ```
       _Note: You may have to use the full path on Windows to correctly authorize the hook to run. We haven't had the ability to test this yet._
 
-2. If planning on deploying with GitOps at any stage, clone the [multi-tenancy-gitops-apps](https://github.com/cloud-native-toolkit/multi-tenancy-gitops-apps) repo into the parent directory of where this repo is currently located on your local machine.
+2. If you haven't already, first follow the instructions at [datapower-local-dev](https://github.ibm.com/Patrick-Bennett/datapower-local-dev) to create a local development DataPower container.
 
-**Checking in/out DataPower backup zip files**
+**(IMPORTANT) Checking in/out DataPower backup zip files**
 1. Write git commits after adding or removing DataPower backup zip files into the root of this repo.
 
-**Please do not rename any zip files to ensure the git hook works correctly.**
+**(IMPORTANT) Please do not rename any zip files between commits to ensure the git hook works correctly.**
 Instead:
 1. Move the zip file out of this repo's directory
 2. Add & commit the changes
