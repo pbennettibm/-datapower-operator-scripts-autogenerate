@@ -134,7 +134,7 @@ Instead:
   ```
 
 14. Create a route for the service you just created in the cluster.
-  - You may have multiple routes.
+  - Check your file sctructure for multiple routes and apply them all.
   ```
   oc apply -f <zip-file-name>-<port>-route.yaml
   ```
