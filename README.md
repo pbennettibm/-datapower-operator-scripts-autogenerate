@@ -21,7 +21,8 @@
       _Note: You may have to use the full path on Windows to correctly authorize the hook to run. We haven't had the ability to test this yet._
 
 2. (Optional) If you haven't already, first follow the instructions at [datapower-local-dev](https://github.ibm.com/Patrick-Bennett/datapower-local-dev) to create a local development DataPower container.
- 
+  - You will need some of the resources generated from that container for deployment.
+
 3. (Optional) If you are using a Windows machine, make sure that you have [WSL](https://docs.microsoft.com/en-us/windows/wsl/install) installed and that you can properly run Bash scripts.
   - This repo's scripts have not been tested in a Windows WSL environment, and because of some of the syntax they contain, they may not work correctly.
   - It is highly recommended to use this repo with a UNIX (Mac) or Linux OS.
