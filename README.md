@@ -1,6 +1,4 @@
-# datapower-operator-scripts
-
-Home of utility scripts for automating datapower-operator tasks.
+# Migration guide for DataPower from local Docker deployment to conatainerized pods running on OpenShift
 
 ## Instuctions
 
@@ -176,6 +174,10 @@ Instead:
 
 3. Change directories to the `multi-tenancy-gitops-apps` repo in the terminal and commit the new files and changes that have been automatically made.
   - If your configuration is complex and changes need to be made please examine the files located in the `/dp/environments/dev/datapower` folders.
+  - 
+## datapower-operator-scripts
+
+Home of utility scripts for automating datapower-operator tasks.
 
 ## Debugging
 
