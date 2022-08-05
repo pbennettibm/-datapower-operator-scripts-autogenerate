@@ -1,7 +1,23 @@
 #!/bin/bash
 
 #define parameters which are passed in.
-NAME=$1
+NAME=$1; shift
+DOMAINLIST=$@
+
+
+INDVDOMAIN=$(
+  for DOMAIN in {$DOMAINLIST}; do
+    echo "    - name: $DOMAIN"
+    echo "      certs:"
+    echo "      - certType: usrcerts"
+    echo "        secret: $DOMAIN-cert"
+    echo "      dpApp:"
+    echo "        config:"
+    echo "        - $DOMAIN-cfg"
+    echo "        local:"
+    echo "        - $DOMAIN-local"
+  done;
+)
 
 #define the template.
 cat  << EOF
@@ -12,7 +28,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "350"
   name: $NAME-instance
 spec:
-  replicas: 3
+  replicas: 1
   version: 10.0-cd
   license:
     accept: true
@@ -23,13 +39,5 @@ spec:
     accessLevel: privileged
     passwordSecret: datapower-user
   domains:
-    - name: default
-      certs:
-      - certType: usrcerts
-        secret: datapower-cert
-      dpApp:
-        config:
-        - $NAME-default-cfg
-        local:
-        - $NAME-default-local
+$INDVDOMAIN
 EOF

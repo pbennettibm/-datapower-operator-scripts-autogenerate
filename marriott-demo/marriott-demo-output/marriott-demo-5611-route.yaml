@@ -3,15 +3,15 @@ apiVersion: route.openshift.io/v1
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "370"
-  name: marriott-second-try-5611-route
-  namespace: marriott-second-try-migration
+  name: marriott-demo-5611-route
+  namespace: marriott-demo
 spec:
   to:
     kind: Service
-    name: marriott-second-try-service
+    name: marriott-demo-service
     weight: 100
   port:
-    targetPort: marriott-second-try-5611
+    targetPort: marriott-demo-5611
   tls:
     termination: passthrough
   wildcardPolicy: None

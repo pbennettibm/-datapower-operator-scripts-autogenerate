@@ -1108,6 +1108,6 @@ data:
 kind: ConfigMap
 metadata:
   creationTimestamp: null
-  name: validation-flow-default-cfg
+  name: default-cfg
   annotations: 
     argocd.argoproj.io/sync-wave: "320"

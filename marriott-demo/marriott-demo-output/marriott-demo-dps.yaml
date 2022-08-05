@@ -3,9 +3,9 @@ kind: DataPowerService
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "350"
-  name: marriott-second-try-instance
+  name: marriott-demo-instance
 spec:
-  replicas: 3
+  replicas: 1
   version: 10.0-cd
   license:
     accept: true
@@ -19,13 +19,13 @@ spec:
     - name: default
       dpApp:
         config:
-        - validation-flow-default-cfg
+        - default-cfg
         local:
-        - validation-flow-default-local
-    - name: dev_marsha
+        - default-local
+    - name: dev-marsha
       certs:
       - certType: usrcerts
-        secret: marsha-cert
+        secret: dev-marsha-cert
       dpApp:
         config:
         - dev-marsha-cfg

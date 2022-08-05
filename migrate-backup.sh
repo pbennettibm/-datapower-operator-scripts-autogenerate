@@ -4,12 +4,15 @@
 # Globals #
 ###########
 
+declare -a PORTARR=("5611" "9090")
 BACKUP_ZIP=""
 UNPACK_DIR=""
 DOMAINS=()
 DOMAIN=""
 OUTPUT_DIR=""
-SYNC_WAVE_COUNT=321
+CFG_SYNC_WAVE_COUNT=320
+LOCAL_SYNC_WAVE_COUNT=335
+ROUTE_SYNC_WAVE_COUNT=370
 
 #############
 # Functions #
@@ -79,6 +82,15 @@ validate_backup_fs() {
     fi
 }
 
+normalize_domain_name() {
+    local domain=$1
+
+    domain=$(echo "${domain}" | tr '[:upper:]' '[:lower:]')
+    domain=$(echo "${domain}" | tr '_' '-')
+
+    echo "${domain}"
+}
+
 populate_domains_array() {
     local zipfile
     local domain
@@ -139,15 +151,6 @@ prune_app_domains() {
     echo "Original default.cfg backed up: ${cfg}.orig"
 }
 
-normalize_domain_name() {
-    local domain=$1
-
-    domain=$(echo "${domain}" | tr '[:upper:]' '[:lower:]')
-    domain=$(echo "${domain}" | tr '_' '-')
-
-    echo "${domain}"
-}
-
 process_domain() {
     local domain=$1
     local domain_zip="${UNPACK_DIR}/${domain}.zip"
@@ -174,13 +177,13 @@ process_domain() {
             pretty_print_cfg $OUTPUT_DIR/default.cfg
             echo "Pruning app domain definitions from default.cfg (this may take a while)"
             prune_app_domains $OUTPUT_DIR/default.cfg
-            kubectl create configmap ${domain_norm}-cfg \
+            kubectl create configmap ${domain}-cfg \
                 --from-file="${OUTPUT_DIR}/default.cfg" \
                 --dry-run="client" \
                 --output="yaml" > $OUTPUT_DIR/default-cfg.yaml
-            echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"320\"" >> $OUTPUT_DIR/default-cfg.yaml
-            sed -i '' 's/name: default-cfg/name: validation-flow-default-cfg/g' $OUTPUT_DIR/$domain-cfg.yaml
+            echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${CFG_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/default-cfg.yaml
             echo "Generated: ${OUTPUT_DIR}/default-cfg.yaml"
+            ((CFG_SYNC_WAVE_COUNT+=1))
         else
             echo "Iterating over domain config: ${domain_config}"
             for cfg in $(find ${domain_config} -type f); do
@@ -188,14 +191,14 @@ process_domain() {
                 cp $cfg $OUTPUT_DIR
                 pretty_print_cfg "${OUTPUT_DIR}/${domain}.cfg"
                 echo "Generating configmap yaml..."
-                kubectl create configmap ${domain_norm}-cfg \
+                kubectl create configmap ${domain}-cfg \
                     --from-file="${OUTPUT_DIR}/${domain}.cfg" \
                     --dry-run="client" \
-                    --output="yaml" > $OUTPUT_DIR/$domain-cfg.yaml
-                echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain-cfg.yaml
-                sed -i '' 's/name: default-cfg/name: validation-flow-default-cfg/g' $OUTPUT_DIR/$domain-cfg.yaml
-                echo "Generated: ${OUTPUT_DIR}/${domain}-cfg.yaml"
-                SYNC_WAVE_COUNT=$((SYNC_WAVE_COUNT+1))
+                    --output="yaml" > $OUTPUT_DIR/$domain_norm-cfg.yaml
+                echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${CFG_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain_norm-cfg.yaml
+                sed -i '' "s/name: ${domain}-cfg/name: ${domain_norm}-cfg/g" $OUTPUT_DIR/$domain_norm-cfg.yaml
+                echo "Generated: ${OUTPUT_DIR}/${domain_norm}-cfg.yaml"
+                ((CFG_SYNC_WAVE_COUNT+=1))
             done
         fi
     fi
@@ -205,14 +208,40 @@ process_domain() {
         echo "Generating tarball..."
         tar --directory="${domain_local}" -cvzf $OUTPUT_DIR/$domain-local.tar.gz .
         echo "Generating configmap yaml..."
-        kubectl create configmap ${domain_norm}-local \
+        kubectl create configmap ${domain}-local \
             --from-file="${OUTPUT_DIR}/${domain}-local.tar.gz" \
             --dry-run="client" \
-            --output="yaml" > $OUTPUT_DIR/$domain-local.yaml
-        echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"310\"" >> $OUTPUT_DIR/$domain-local.yaml
-        sed -i '' 's/name: default-local/name: validation-flow-default-local/g' $OUTPUT_DIR/$domain-local.yaml
-        echo "Generated: ${OUTPUT_DIR}/${domain}-local.yaml"
+            --output="yaml" > $OUTPUT_DIR/$domain_norm-local.yaml
+        echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${LOCAL_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain_norm-local.yaml
+        sed -i '' "s/name: ${domain}-local/name: ${domain_norm}-local/g" $OUTPUT_DIR/$domain_norm-local.yaml
+        echo "Generated: ${OUTPUT_DIR}/${domain_norm}-local.yaml"
+        ((LOCAL_SYNC_WAVE_COUNT+=1))
     fi
+}
+
+change_domains_case() {
+    local domain_norm
+
+    echo "Changing domain cases for yamls"
+
+    for i in "${!DOMAINS[@]}"; do
+        domain_norm=$(normalize_domain_name ${DOMAINS[i]})
+        echo "Changed name to: ${domain_norm}"
+        DOMAINS[i]=$domain_norm
+    done
+}
+
+create_yamls() {
+    ./migrate-backup-dps.sh ${BACKUP_ZIP%.*} "${DOMAINS[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml
+    echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml created"
+    ./migrate-backup-service.sh ${BACKUP_ZIP%.*} "${PORTARR[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml
+    echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml created"
+    for port in "${PORTARR[@]}"; do
+        ./migrate-backup-route.sh ${BACKUP_ZIP%.*} "$port" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml
+        echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml created"
+        sed -i '' "s/370/${ROUTE_SYNC_WAVE_COUNT}/g" $OUTPUT_DIR/${BACKUP_ZIP%.*}-"$port"-route.yaml
+        ((ROUTE_SYNC_WAVE_COUNT+=1))
+    done;
 }
 
 ########
@@ -294,3 +323,7 @@ else
         process_domain $domain
     done
 fi
+
+change_domains_case
+
+create_yamls $DOMAINS[@]

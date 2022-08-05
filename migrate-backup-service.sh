@@ -21,10 +21,10 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "360"
   name: $NAME-service
-  namespace: $NAME-migration
+  namespace: $NAME
 spec:
   selector:
-    app.kubernetes.io/instance: $NAME-migration-$NAME-instance
+    app.kubernetes.io/instance: $NAME-$NAME-instance
   ports:
 $PORTLIST
 EOF
