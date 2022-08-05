@@ -70,9 +70,9 @@ Instead:
   oc new-project <zip-file-name>-migration
   ```
   
-4. (Optional) If using your own exported zip file, edit the "PORTARR" variable in 'migrate-backup.sh' with the ports you need to expose.
+4. (Optional) If using your own exported zip file, edit the "PORTARR" variable at the top of 'migrate-backup.sh' with the ports you need to expose.
   - Port 9090 is exposed for the DataPower UI.
-  - You may choose to remove if you want as using the DataPower UI outside of testing purposes on OpenShift is an anti-pattern.
+  - You may choose to remove if you want, as using the DataPower UI outside of testing purposes on OpenShift is an anti-pattern.
  
 5. Add and commit a DataPower exported zip file to this repository.
   - An example is provided in the previous step in the [datapower-local-dev](https://github.ibm.com/Patrick-Bennett/datapower-local-dev) as validation-flow.zip.
