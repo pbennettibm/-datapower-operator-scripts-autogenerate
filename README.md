@@ -23,7 +23,8 @@
 2. If you haven't already, first follow the instructions at [datapower-local-dev](https://github.ibm.com/Patrick-Bennett/datapower-local-dev) to create a local development DataPower container.
 
 **(IMPORTANT) Checking in/out DataPower backup zip files**
-1. Write git commits after adding or removing DataPower backup zip files into the root of this repo.
+  - Write git commits after adding or removing DataPower backup zip files into the root of this repo.
+  - This will ensure that the git pre-commit hook will properly run the necessary scripts to generate your resources.
 
 **(IMPORTANT) Please do not rename any zip files between commits to ensure the git hook works correctly.**
 Instead:
