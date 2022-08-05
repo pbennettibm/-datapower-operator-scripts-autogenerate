@@ -22,7 +22,7 @@ Home of utility scripts for automating datapower-operator tasks.
       ```
       _Note: You may have to use the full path on Windows to correctly authorize the hook to run. We haven't had the ability to test this yet._
 
-2. If planning on deploying with GitOps at any stage, clone the [multi-tenancy-gitops-apps](https://github.com/DataPower-on-Azure/multi-tenancy-gitops-apps) repo into the parent directory of where this repo is currently located on your local machine.
+2. If planning on deploying with GitOps at any stage, clone the [multi-tenancy-gitops-apps](https://github.com/cloud-native-toolkit/multi-tenancy-gitops-apps) repo into the parent directory of where this repo is currently located on your local machine.
 
 **Checking in/out DataPower backup zip files**
 1. Write git commits after adding or removing DataPower backup zip files into the root of this repo.
@@ -66,11 +66,12 @@ Instead:
   oc new-project <zip-file-name>-migration
   ```
   
-4. (Optional) Check in a DataPower backup zip file if you wish to use your own configuration instead of the sample provided.
-  - Remove validation-flow.zip as well to avoid confusion.
+4. Add and commit a DataPower exported zip file to this repository.
+  - An example is provided in the previous step in the [datapower-local-dev](https://github.ibm.com/Patrick-Bennett/datapower-local-dev) as validation-flow.zip.
+  - You may use your own exported configuration as well.
 
 5. Gather the keys and certificates you wish to use and create a secret from them.
-  - These will be located in the mounted volume from the previous step in the [DataPower-install](https://github.com/DataPower-on-Azure/DataPower-install) repo.
+  - These will be located in the mounted volume from the previous step in the [datapower-local-dev](https://github.ibm.com/Patrick-Bennett/datapower-local-dev) repo.
   - If your keys are formatted as .cert/.key then run this command.
     ```
     oc create secret tls <domain>-cert --key=/path/to/my.crt --cert=/path/to/my.key
@@ -147,44 +148,31 @@ Instead:
 
 **Pre-reqs**
 
-1. Clone the [multi-tenancy-gitops-apps](https://github.com/DataPower-on-Azure/multi-tenancy-gitops-apps) repo into the parent directory of where this repo is currently located on your local machine.
-  - If you have already commited a zip file that you wish to use before cloning the above repo for the first time, please:
-    - Move the zip file out of this repo's directory
-    - Add & commit the changes
-    - Rename the moved zip file
-    - Move the renamed zip file back to this repo's directory
-    - Add & commit the changes.
+1. Ensure that you have ArgoCD correctly installed on you cluster following the instructions in [multi-tenancy-gitops](https://github.com/cloud-native-toolkit/multi-tenancy-gitops)
 
-2. Login to the OpenShift Web Console.
+2. If you haven't already, clone the [multi-tenancy-gitops-apps](https://github.com/cloud-native-toolkit/multi-tenancy-gitops-apps) repo into the parent directory of where this repo is currently located on your local machine.
+  - Having the correct folder structure is important for this repo's scripts to work properly.
+
+3. Login to the OpenShift Web Console.
   - Use the provided url, username and password from either the OpenShift installer, or an admin who holds the credentials.
 
-3. Once logged in the the OpenShift Web Console, log in to the OpenShift CLI.
+4. Once logged in the the OpenShift Web Console, log in to the OpenShift CLI.
   - In the upper right corner of the OpenShift Web Console select the IAM user and click "Copy login command" in the drop down menu.
   - In the window that opens, copy the first CLI input and paste it into your CLI of choice.
 
-4. Configuration for ODF on OCP 4.10+
-  - Delete the `multi-tenancy-gitops` repo from your `GIT_ORG` if it exists.
-  - Fork the [Cloud Native Toolkit](https://github.com/cloud-native-toolkit/multi-tenancy-gitops/generate) to your existing `GIT_ORG`.
-  - Clone the `multi-tenancy-gitops` repo to your local machine.
-  - Navigate to the `/scripts` folder to run the `set-git-source.sh` script.
-  - Commit and push.
-  - Run the `infra-mod.sh` script to deploy ODF Storage.
-  - Commit and push.
-  - Navigate to Argo in the OpenShift web console
-  - Refresh Argo to see the changes.
 
 **Instructions**
 
-1. Add and commit a DataPower backup zip to this repository.
-  - If you already have the zip file commited:
+1. Add and commit a DataPower exported zip file to this repository.
+  - An example is provided in the previous step in the [datapower-local-dev](https://github.ibm.com/Patrick-Bennett/datapower-local-dev) as validation-flow.zip.
+  - You may use your own exported configuration as well.
+  - If you already have a zip file commited to this repo:
     1. Move the zip file out of this repo's directory
     2. Add & commit the changes
     3. Move the zip file back to this repo's directory
     4. Add & commit the changes.
 
-2. (Optional) Refer to the instructions in [multi-tenancy-gitops-apps](https://github.com/DataPower-on-Azure/multi-tenancy-gitops-apps) if attempting the GitOps deployment on your own.
-
-11. If you do not have a key/cert secret for each domain, make sure to remove the entire "certs" definition from the affected domain(s) in `multi-tenancy-gitops-apps/dp/environments/dev/datapower/<zip-file-name>-dps.yaml`. (Optional)
+2. (Optional) If you do not have a key/cert secret for each domain, make sure to remove the entire "certs" definition from the affected domain(s) in `multi-tenancy-gitops-apps/dp/environments/dev/datapower/<zip-file-name>-dps.yaml`.
 
 3. Change directories to the `multi-tenancy-gitops-apps` repo in the terminal and commit the new files and changes that have been automatically made.
   - If your configuration is complex and changes need to be made please examine the files located in the `/dp/environments/dev/datapower` folders.
