@@ -90,7 +90,6 @@ Instead:
   ```
 
 7. Create a secret to pull the DataPower image from the IBM registry.
-  - If attempting to run in any enivornment besides "nonproduction" refer to [Pulling images from the IBM Entitled Registry](https://www.ibm.com/docs/en/datapower-operator/1.6?topic=features-entitled-registry) for instructions.
   - If using an [IBM Entitlement Key](https://myibm.ibm.com/products-services/containerlibrary)
     ```
     oc create secret docker-registry \
@@ -99,7 +98,8 @@ Instead:
       --docker-password=<entitlement-key> \
       --docker-server=cp.icr.io
     ```
-  _Note: This is the most common usage._
+    _Note: This is the most common usage._
+  - If attempting to run in any enivornment besides "nonproduction" refer to [Pulling images from the IBM Entitled Registry](https://www.ibm.com/docs/en/datapower-operator/1.6?topic=features-entitled-registry) for instructions.
   - If you want to use a custom Service Account, read the official documentation and edit the appropriate fields in the generated <zipfile>/<zipfile>-dps.yaml file according to the links below.
     - [Pulling images from the IBM Entitled Registry](https://www.ibm.com/docs/en/datapower-operator/1.6?topic=features-entitled-registry) - scroll to "Using a custom Service Account"
     - [serviceAccountName](https://www.ibm.com/docs/en/datapower-operator/1.6?topic=s-serviceaccountname-1)
