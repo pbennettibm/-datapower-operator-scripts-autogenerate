@@ -39,6 +39,7 @@ Instead:
 4. Move the renamed zip file back to this repo's directory
 5. Add & commit the changes.
 
+
 ### Instructions for deploying DataPower manually on OCS
 
 **Pre-reqs**
@@ -151,6 +152,7 @@ Instead:
 
 15. Navigate to the route's address to ensure that your DataPower instance is working.
 
+
 ### Instructions for deploying DataPower on OCS with GitOps
 
 **Pre-reqs**
@@ -232,6 +234,16 @@ Instead:
 
 9. Change directories to the `multi-tenancy-gitops-apps` repo in the terminal and commit the new files and changes that have been automatically made.
   - If your configuration is complex and other changes need to be made, please examine the files located in the `/dp/environments/dev/datapower` folders before commiting.
+
+10. Either use the OpenShift web console or the command line to get the route's address.
+  - If using the web console, under the "Administrator" tab go to "Networking" and then select "Routes".
+  - If using the command line.
+    ```
+    oc get route
+    ```
+
+11. Navigate to the route's address to ensure that your DataPower instance is working.
+
 
 ## datapower-operator-scripts
 
