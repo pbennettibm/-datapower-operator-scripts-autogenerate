@@ -4,7 +4,9 @@
 # Globals #
 ###########
 
-declare -a PORTARR=("5611" "9090")
+# "5611" - updated flow port for v2
+
+declare -a PORTARR=("9090" "8001")
 BACKUP_ZIP=""
 UNPACK_DIR=""
 DOMAINS=()
