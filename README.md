@@ -1,4 +1,4 @@
-# Migration guide for DataPower from existing local Docker deployment to conatainerized pods running on OpenShift
+# Migration guide from existing local Docker deployment to virtual DataPower conatainerized pods running on OpenShift
 
 ## Instuctions
 
