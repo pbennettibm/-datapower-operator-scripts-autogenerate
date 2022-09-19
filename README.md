@@ -125,7 +125,7 @@ oc create secret generic datapower-user --from-literal=password=admin
   - [serviceAccountName](https://www.ibm.com/docs/en/datapower-operator/1.6?topic=s-serviceaccountname-1)
   - [imagePullSecrets](https://www.ibm.com/docs/en/datapower-operator/1.6?topic=s-imagepullsecrets-1)
 
-8. Go into the "backup-output" folder and apply the domain configmaps.
+8. Go into the "<zip-file-name>-output" folder and apply the domain configmaps.
 
 ```
 cd <zip-file-name>
