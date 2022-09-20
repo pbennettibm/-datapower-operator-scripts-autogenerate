@@ -2,14 +2,6 @@
 
 zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 
-# Check manual deployment in new namespace.
-# Check for errors with configmap naming conventions. Should be fine.
-
-# DEMO ----------------------------------------
-# Remove default cert in dps as we don't have it.
-# Point out sync-wave iteration.
-# Changed DPS pods to 1 to show scaling up with GitOps.
-
 for file in $zipfiles; do
   if [[ -f $file.zip ]]; then
     if [ -d "${file}" ] ; then
