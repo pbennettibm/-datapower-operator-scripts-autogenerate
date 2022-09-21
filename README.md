@@ -77,7 +77,7 @@ Instead:
 3. Create a new project namespace to deploy your instance to using the CLI.
 
 ```
-oc new-project <zip-file-name>-migration
+oc new-project <zip-file-name>
 ```
 
 4. (Optional) If using your own exported zip file, edit the "PORTARR" variable at the top of 'migrate-backup.sh' with the ports you need to expose.
@@ -95,11 +95,11 @@ oc new-project <zip-file-name>-migration
 - These will be located in the mounted volume from the previous step in the [datapower-local-dev](https://github.ibm.com/Patrick-Bennett/datapower-local-dev) repo.
 - If your keys are formatted as .cert/.key then run this command.
   ```
-  oc create secret tls <domain>-"cert/user" --key=/path/to/my.crt --cert=/path/to/my.key
+  oc create secret tls <domain>-cert --key=/path/to/my.crt --cert=/path/to/my.key
   ```
 - If they are not then run this command instead.
   ```
-  oc create secret generic <domain>-"cert/user" --from-file=/path/to/cert --from-file=/path/to/key
+  oc create secret generic <domain>-cert --from-file=/path/to/cert --from-file=/path/to/key
   ```
 
 6. Create an admin user credential secret.
