@@ -10,8 +10,8 @@ for file in $zipfiles; do
 
     echo "extracting resources from ${file}.zip"
     ./migrate-backup.sh $file.zip
-    sed -i '' 's/[{}]//g' ./$file/$file-output/$file-dps.yaml
-    sed -i '' 's/[{}]//g' ./$file/$file-output/$file-service.yaml
+    sed -i 's/[{}]//g' ./$file/$file-output/$file-dps.yaml
+    sed -i 's/[{}]//g' ./$file/$file-output/$file-service.yaml
     git add $file
   else
     if [ -d "${file}" ] ; then
