@@ -4,7 +4,13 @@
 
 **Pre-Reqs**
 
-1. Config the git pre-commit hook to run scripts.
+1. Install [oc](https://docs.openshift.com/container-platform/4.10/cli_reference/openshift_cli/getting-started-cli.html) and add it to your OS' path.
+
+- Make sure you install the same version as the OpenShift Cloud Platform you will be connecting to.
+
+2. Install [kubectl](https://kubernetes.io/docs/tasks/tools/) and add it to your OS' path.
+
+3. Config the git pre-commit hook to run scripts.
 
 - Inside the root of this repo run
   ```
@@ -21,11 +27,11 @@
     ```
     _Note: You may have to use the full path on Windows to correctly authorize the hook to run. We haven't had the ability to test this yet._
 
-2. (Optional) If you haven't already, first follow the instructions at [datapower-local-dev](https://github.ibm.com/Patrick-Bennett/datapower-local-dev) to create a local development DataPower container.
+4. (Optional) If you haven't already, first follow the instructions at [datapower-local-dev](https://github.com/dal-datapower/datapower-local-dev) to create a local development DataPower container.
 
 - You will need some of the resources generated from that container for deployment.
 
-3. (Optional) If you are using a Windows machine, make sure that you have [WSL](https://docs.microsoft.com/en-us/windows/wsl/install) installed and that you can properly run Bash scripts.
+5. (Optional) If you are using a Windows machine, make sure that you have [WSL](https://docs.microsoft.com/en-us/windows/wsl/install) installed and that you can properly run Bash scripts.
 
 - This repo's scripts have not been tested in a Windows WSL environment, and because of some of the syntax they contain, they may not work correctly.
 - It is highly recommended to use this repo with a UNIX (Mac) or Linux OS.
@@ -87,12 +93,12 @@ oc new-project <zip-file-name>
 
 5. Add and commit a DataPower exported zip file to this repository.
 
-- An example is provided in the previous step in the [datapower-local-dev](https://github.ibm.com/Patrick-Bennett/datapower-local-dev) as validation-flow.zip.
+- An example is provided in the previous step in the [datapower-local-dev](https://github.com/dal-datapower/datapower-local-dev) as validation-flow.zip.
 - You may use your own exported configuration as well.
 
-5. Gather the keys and certificates you wish to use and create a secret from them.
+6. Gather the keys and certificates you wish to use and create a secret from them.
 
-- These will be located in the mounted volume from the previous step in the [datapower-local-dev](https://github.ibm.com/Patrick-Bennett/datapower-local-dev) repo.
+- These will be located in the mounted volume from the previous step in the [datapower-local-dev](https://github.com/dal-datapower/datapower-local-dev) repo.
 - If your keys are formatted as .cert/.key then run this command.
   ```
   oc create secret tls <domain>-cert --key=/path/to/my.crt --cert=/path/to/my.key
@@ -102,13 +108,13 @@ oc new-project <zip-file-name>
   oc create secret generic <domain>-cert --from-file=/path/to/cert --from-file=/path/to/key
   ```
 
-6. Create an admin user credential secret.
+7. Create an admin user credential secret.
 
 ```
 oc create secret generic datapower-user --from-literal=password=admin
 ```
 
-7. Create a secret to pull the DataPower image from the IBM registry.
+8. Create a secret to pull the DataPower image from the IBM registry.
 
 - If using an [IBM Entitlement Key](https://myibm.ibm.com/products-services/containerlibrary)
   ```
@@ -125,7 +131,7 @@ oc create secret generic datapower-user --from-literal=password=admin
   - [serviceAccountName](https://www.ibm.com/docs/en/datapower-operator/1.6?topic=s-serviceaccountname-1)
   - [imagePullSecrets](https://www.ibm.com/docs/en/datapower-operator/1.6?topic=s-imagepullsecrets-1)
 
-8. Go into the "<zip-file-name>-output" folder and apply the domain configmaps.
+9. Go into the "<zip-file-name>-output" folder and apply the domain configmaps.
 
 ```
 cd <zip-file-name>
@@ -136,27 +142,27 @@ oc apply -f default-local.yaml
 
 \_Note: If your zip file contains multiple domains, apply the other domains as well.
 
-9. Once the YAML is applied, check the cluster to ensure that everything looks correct.
+10. Once the YAML is applied, check the cluster to ensure that everything looks correct.
 
 ```
 oc get configmap
 ```
 
-10. If you do not have a key/cert secret for each domain, make sure to remove the entire "certs" definition from the affected domain(s) in `<zip-file-name>-dps.yaml`. (Optional)
+11. If you do not have a key/cert secret for each domain, make sure to remove the entire "certs" definition from the affected domain(s) in `<zip-file-name>-dps.yaml`. (Optional)
 
-11. Create the DataPowerService resource in the cluster.
+12. Create the DataPowerService resource in the cluster.
 
 ```
 oc apply -f <zip-file-name>-dps.yaml
 ```
 
-12. Create a service for the DataPowerService in the cluster.
+13. Create a service for the DataPowerService in the cluster.
 
 ```
 oc apply -f <zip-file-name>-service.yaml
 ```
 
-13. Create a route for the service you just created in the cluster.
+14. Create a route for the service you just created in the cluster.
 
 - Check your file sctructure for multiple routes and apply them all.
 
@@ -164,7 +170,7 @@ oc apply -f <zip-file-name>-service.yaml
 oc apply -f <zip-file-name>-<port>-route.yaml
 ```
 
-14. Either use the OpenShift web console or the command line to get the route's address.
+15. Either use the OpenShift web console or the command line to get the route's address.
 
 - If using the web console, under the "Administrator" tab go to "Networking" and then select "Routes".
 - If using the command line.
@@ -172,15 +178,15 @@ oc apply -f <zip-file-name>-<port>-route.yaml
   oc get route
   ```
 
-15. Navigate to the route's address to ensure that your DataPower instance is working.
+16. Navigate to the route's address to ensure that your DataPower instance is working.
 
 ### Instructions for deploying DataPower on OCS with GitOps
 
 **Pre-reqs**
 
-1. Ensure that you have ArgoCD correctly installed on your cluster by following the instructions at [multi-tenancy-gitops](https://github.com/cloud-native-toolkit/multi-tenancy-gitops).
+1. Ensure that you have ArgoCD correctly installed on your cluster by following the instructions at [multi-tenancy-gitops](https://github.com/dal-datapower/multi-tenancy-gitops).
 
-2. If you haven't already, clone the [multi-tenancy-gitops-apps](https://github.com/cloud-native-toolkit/multi-tenancy-gitops-apps) repo into the parent directory of where this repo is currently located on your local machine.
+2. If you haven't already, clone the [multi-tenancy-gitops-apps](https://github.com/dal-datapower/multi-tenancy-gitops-services) repo into the parent directory of where this repo is currently located on your local machine.
 
 - Having the correct folder structure is important for this repo's scripts to work properly.
 
@@ -202,33 +208,21 @@ oc apply -f <zip-file-name>-<port>-route.yaml
   oc apply -f ibm-catalog-source.yaml
   ```
 
-2. Install the DataPower operator on all namespaces using the Web Console.
-
-- Under the "Administrator" tab select "Operators" and then "OperatorHub".
-- In the search bar provided search for `datapower`.
-- Select "IBM DataPower GateWay".
-- Select "Install" and keep all defaults
-  - Make sure you are installing on all namespaces
-
-3. Create a new project namespace to deploy your instance to using the CLI.
-
-```
-oc new-project <zip-file-name>-migration
-```
-
-4. (Optional) If using your own exported zip file, edit the "PORTARR" variable at the top of 'migrate-backup.sh' with the ports you need to expose.
+2. (Optional) If using your own exported zip file, edit the "PORTARR" variable at the top of 'migrate-backup.sh' with the ports you need to expose.
 
 - Port 9090 is exposed for the DataPower UI.
 - You may choose to remove if you want, as using the DataPower UI outside of testing purposes on OpenShift is an anti-pattern.
 
-5. Add and commit a DataPower exported zip file to this repository.
+3. Add and commit a DataPower exported zip file to this repository.
 
-- An example is provided in the previous step in the [datapower-local-dev](https://github.ibm.com/Patrick-Bennett/datapower-local-dev) as validation-flow.zip.
+- An example is provided in the previous step in the [datapower-local-dev](https://github.com/dal-datapower/datapower-local-dev) as validation-flow.zip.
 - You may use your own exported configuration as well.
 
-5. Gather the keys and certificates you wish to use and create a secret from them.
+4. Gather the keys and certificates you wish to use and create a secret from them.
 
-- These will be located in the mounted volume from the previous step in the [datapower-local-dev](https://github.ibm.com/Patrick-Bennett/datapower-local-dev) repo.
+_Note: You may already have created these secrets if you have previously completed manual deployment._
+
+- These will be located in the mounted volume from the previous step in the [datapower-local-dev](https://github.com/dal-datapower/datapower-local-dev) repo.
 - If your keys are formatted as .cert/.key then run this command.
   ```
   oc create secret tls <domain>-cert --key=/path/to/my.crt --cert=/path/to/my.key
@@ -240,11 +234,15 @@ oc new-project <zip-file-name>-migration
 
 6. Create an admin user credential secret.
 
+_Note: You may already have created this secrets if you have previously completed manual deployment._
+
 ```
 oc create secret generic datapower-user --from-literal=password=admin
 ```
 
 7. Create a secret to pull the DataPower image from the IBM registry.
+
+_Note: You may already have created this secrets if you have previously completed manual deployment._
 
 - If using an [IBM Entitlement Key](https://myibm.ibm.com/products-services/containerlibrary)
   ```
@@ -263,7 +261,7 @@ oc create secret generic datapower-user --from-literal=password=admin
 
 8. (Optional) If you do not have a key/cert secret for each domain, make sure to remove the entire "certs" definition from the affected domain(s) in `multi-tenancy-gitops-apps/dp/environments/dev/datapower/<zip-file-name>-dps.yaml`.
 
-9. Change directories to the `multi-tenancy-gitops-apps` repo in the terminal and commit the new files and changes that have been automatically made.
+9. Change directories to the `multi-tenancy-gitops-apps` repo in the terminal and commit and push the changes that have been automatically made.
 
 - If your configuration is complex and other changes need to be made, please examine the files located in the `/dp/environments/dev/datapower` folders before commiting.
 
