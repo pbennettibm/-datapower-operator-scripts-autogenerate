@@ -4,7 +4,10 @@
 NAME=$1
 PORT=$2
 
+#Bash
 read -e -p "Do you need TLS enabled for Port ${Port}? (yes/no)" TLSBOOL
+#Zsh
+read -q "TLSBOOL?Do you need TLS enabled for Port ${Port} (yes/no)?"
 
 TLSCHECK=$(
   if [ "$TLSBOOL" == "yes" ]; then
