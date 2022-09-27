@@ -4,7 +4,7 @@
 NAME=$1
 PORT=$2
 
-echo $Port
+echo $PORT
 TLSBOOL=$(bash -c 'read -e -p "Do you want TLS enabled for the port above? (yes/no): " tmp; echo $tmp')
 
 TLSCHECK=$(
