@@ -240,12 +240,10 @@ create_yamls() {
     echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml created"
     for port in "${PORTARR[@]}"; do
         IFS='-' read -ra port_split <<< "$port"
-        echo "${port_split[0]} - testing"
-        echo "${port_split[1]} - testing"
-
-        ./migrate-backup-route.sh ${BACKUP_ZIP%.*} "$port" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml
-        echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml created"
-        sed -i '' "s/370/${ROUTE_SYNC_WAVE_COUNT}/g" $OUTPUT_DIR/${BACKUP_ZIP%.*}-"$port"-route.yaml
+        
+        ./migrate-backup-route.sh ${BACKUP_ZIP%.*} "${port_split[0]}" "${port_split[1]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"${port_split[1]}"-route.yaml
+        echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"${port_split[1]}"-route.yaml created"
+        sed -i '' "s/370/${ROUTE_SYNC_WAVE_COUNT}/g" $OUTPUT_DIR/${BACKUP_ZIP%.*}-"${port_split[1]}"-route.yaml
         ((ROUTE_SYNC_WAVE_COUNT+=1))
     done;
 }
