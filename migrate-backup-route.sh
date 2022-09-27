@@ -4,6 +4,8 @@
 NAME=$1
 PORT=$2
 
+read -p "Do you need TLS enabled for Port ${Port}?" TLSbool
+
 #define the template.
 cat  << EOF
 kind: Route
