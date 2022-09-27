@@ -4,10 +4,10 @@
 NAME=$1
 PORT=$2
 
-read -p "Do you need TLS enabled for Port ${Port}? (yes/no)" TLSbool
+read -e -p "Do you need TLS enabled for Port ${Port}? (yes/no)" TLSBOOL
 
 TLSCHECK=$(
-  if [ "$str1" == "yes" ]; then
+  if [ "$TLSBOOL" == "yes" ]; then
     echo "  tls:"
     echo "    termination: passthrough"
     echo "  wildcardPolicy: None"
