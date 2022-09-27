@@ -26,10 +26,10 @@ done
 
 yamlfiles=`git diff HEAD --name-only | grep -E '.yaml'`
 
+echo "${yamlfiles} - test"
 cd ..
 
 for file in $yamlfiles; do
-  echo $file
   if [[ -f "./datapower-operator-scripts/${file}" ]]; then
     if [[ "$file" == *-dps* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
