@@ -178,9 +178,9 @@ oc apply -f <zip-file-name>-<port>-route.yaml
 
 **Pre-reqs**
 
-1. Ensure that you have ArgoCD correctly installed on your cluster by following the instructions at [multi-tenancy-gitops](https://github.com/cloud-native-toolkit/multi-tenancy-gitops).
+1. Ensure that you have ArgoCD correctly installed on your cluster by following the instructions at [multi-tenancy-gitops](https://github.com/dal-datapower/multi-tenancy-gitops).
 
-2. If you haven't already, clone the [multi-tenancy-gitops-apps](https://github.com/cloud-native-toolkit/multi-tenancy-gitops-apps) repo into the parent directory of where this repo is currently located on your local machine.
+2. If you haven't already, clone the [multi-tenancy-gitops-apps](https://github.com/dal-datapower/multi-tenancy-gitops-services) repo into the parent directory of where this repo is currently located on your local machine.
 
 - Having the correct folder structure is important for this repo's scripts to work properly.
 
