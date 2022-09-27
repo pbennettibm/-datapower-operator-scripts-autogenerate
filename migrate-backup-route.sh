@@ -4,10 +4,6 @@
 NAME=$1
 PORT=$2
 
-IFS=';' read -ra PORTSPLIT <<< "$PORT"
-
-echo "$PORTSPLIT - testing"
-
 #define the template.
 cat  << EOF
 kind: Route
@@ -15,7 +11,7 @@ apiVersion: route.openshift.io/v1
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "370"
-  name: $NAME-${PORTSPLIT[1]}-route
+  name: $NAME-$PORT-route
   namespace: $NAME
 spec:
   to:
@@ -23,7 +19,7 @@ spec:
     name: $NAME-service
     weight: 100
   port:
-    targetPort: $NAME-${PORTSPLIT[1]}
+    targetPort: $NAME-$PORT
   # tls:
   #  termination: passthrough
   # wildcardPolicy: None
