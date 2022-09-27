@@ -4,7 +4,15 @@
 NAME=$1
 PORT=$2
 
-read -p "Do you need TLS enabled for Port ${Port}?" TLSbool
+read -p "Do you need TLS enabled for Port ${Port}? (yes/no)" TLSbool
+
+TLSCHECK=$(
+  if [ "$str1" == "yes" ]; then
+    echo "  tls:"
+    echo "    termination: passthrough"
+    echo "  wildcardPolicy: None"
+  fi
+)
 
 #define the template.
 cat  << EOF
@@ -22,7 +30,5 @@ spec:
     weight: 100
   port:
     targetPort: $NAME-$PORT
-  # tls:
-  #  termination: passthrough
-  # wildcardPolicy: None
+$TLSCHECK
 EOF
