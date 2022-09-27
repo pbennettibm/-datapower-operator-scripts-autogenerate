@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "360"
+  name: validation-flow-service
+  namespace: validation-flow
+spec:
+  selector:
+    app.kubernetes.io/instance: validation-flow-validation-flow-instance
+  ports:
+    - name: validation-flow-https-9090
+      protocol: TCP
+      port: https-9090
+      targetPort: https-9090
+    - name: validation-flow-http-8001
+      protocol: TCP
+      port: http-8001
+      targetPort: http-8001
