@@ -4,7 +4,7 @@
 NAME=$1
 PORT=$2
 
-PORTSPLIT=$(echo $PORT | tr "-" "\n")
+IFS=';' read -ra PORTSPLIT <<< "$PORT"
 
 echo "$PORTSPLIT - testing"
 
