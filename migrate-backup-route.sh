@@ -29,4 +29,5 @@ spec:
     weight: 100
   port:
     targetPort: $NAME-$PORT
+$TLSENABLED
 EOF
