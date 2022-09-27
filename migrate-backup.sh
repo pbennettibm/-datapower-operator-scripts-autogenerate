@@ -4,7 +4,7 @@
 # Globals #
 ###########
 
-declare -a PORTARR=("9090" "8001")
+declare -a PORTARR=("https-9090" "http-8001")
 BACKUP_ZIP=""
 UNPACK_DIR=""
 DOMAINS=()
