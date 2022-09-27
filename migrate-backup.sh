@@ -240,8 +240,8 @@ create_yamls() {
     echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml created"
     for port in "${PORTARR[@]}"; do
         IFS='-' read -ra port_split <<< "$port"
-        echo "$port_split - testing"
         echo "${port_split[0]} - testing"
+        echo "${port_split[1]} - testing"
 
         ./migrate-backup-route.sh ${BACKUP_ZIP%.*} "$port" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml
         echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml created"
