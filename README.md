@@ -77,8 +77,9 @@ Instead:
 - Under the "Administrator" tab select "Operators" and then "OperatorHub".
 - In the search bar provided search for `datapower`.
 - Select "IBM DataPower GateWay".
-- Select "Install" and keep all defaults
-  - Make sure you are installing on all namespaces
+- Select "Install" and keep all defaults.
+  - Make sure you are installing on all namespaces as you will not have to repeat this step for other backup zip file migrations.
+  - If you do not wish to do this in your cluster then make sure to repeat this step for each subsequent zip file you wish to migrate.
 
 3. Create a new project namespace to deploy your instance to using the CLI.
 
