@@ -165,7 +165,7 @@ oc apply -f <zip-file-name>-service.yaml
 
 14. Create a route for the service you just created in the cluster.
 
-- Check your file sctructure for multiple routes and apply them all.
+- Check your file structure for multiple routes and apply them all.
 
 ```
 oc apply -f <zip-file-name>-<port>-route.yaml
