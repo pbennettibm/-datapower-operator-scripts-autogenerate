@@ -73,12 +73,12 @@ initialize_defaults() {
 validate_backup_fs() {
     if [[ ! -f "${UNPACK_DIR}/export.xml" ]]; then
         echo "expected to find ${UNPACK_DIR}/export.xml"
-        error "${BACKUP_ZIP} does not appear to be a well-formed backup ZIP - aborting"
+        error "${BACKUP_ZIP} does not appear to be a well-formed backup ZIP - missing export.xml - aborting"
     fi
 
     if [[ ! $(find $UNPACK_DIR -name '*.zip' | wc -l) -gt 0 ]]; then
         echo "expected to find domain ZIP file(s) in ${UNPACK_DIR}"
-        error "${BACKUP_ZIP} does not appear to be a well-formed backup ZIP - aborting"
+        error "${BACKUP_ZIP} does not appear to be a well-formed backup ZIP - missing domain - aborting"
     fi
 }
 
