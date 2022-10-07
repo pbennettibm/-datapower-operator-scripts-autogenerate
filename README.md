@@ -50,7 +50,7 @@ Instead:
 4. Move the renamed zip file back to this repo's directory
 5. Add & commit the changes.
 
-### Instructions for deploying DataPower manually on OCS
+### Instructions for deploying DataPower manually on OpenShift Container Platform
 
 **Pre-reqs**
 
@@ -77,8 +77,9 @@ Instead:
 - Under the "Administrator" tab select "Operators" and then "OperatorHub".
 - In the search bar provided search for `datapower`.
 - Select "IBM DataPower GateWay".
-- Select "Install" and keep all defaults
-  - Make sure you are installing on all namespaces
+- Select "Install" and keep all defaults.
+  - Make sure you are installing on all namespaces as you will not have to repeat this step for other backup zip file migrations.
+  - If you do not wish to do this in your cluster then make sure to repeat this step for each subsequent zip file you wish to migrate.
 
 3. Create a new project namespace to deploy your instance to using the CLI.
 
@@ -164,7 +165,7 @@ oc apply -f <zip-file-name>-service.yaml
 
 14. Create a route for the service you just created in the cluster.
 
-- Check your file sctructure for multiple routes and apply them all.
+- Check your file structure for multiple routes and apply them all.
 
 ```
 oc apply -f <zip-file-name>-<port>-route.yaml
@@ -180,7 +181,7 @@ oc apply -f <zip-file-name>-<port>-route.yaml
 
 16. Navigate to the route's address to ensure that your DataPower instance is working.
 
-### Instructions for deploying DataPower on OCS with GitOps
+### Instructions for deploying DataPower on OCP with GitOps
 
 **Pre-reqs**
 
