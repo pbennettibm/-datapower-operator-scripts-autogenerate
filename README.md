@@ -50,7 +50,7 @@ Instead:
 4. Move the renamed zip file back to this repo's directory
 5. Add & commit the changes.
 
-### Instructions for deploying DataPower manually on OCS
+### Instructions for deploying DataPower manually on OpenShift Container Platform
 
 **Pre-reqs**
 
@@ -181,7 +181,7 @@ oc apply -f <zip-file-name>-<port>-route.yaml
 
 16. Navigate to the route's address to ensure that your DataPower instance is working.
 
-### Instructions for deploying DataPower on OCS with GitOps
+### Instructions for deploying DataPower on OCP with GitOps
 
 **Pre-reqs**
 
