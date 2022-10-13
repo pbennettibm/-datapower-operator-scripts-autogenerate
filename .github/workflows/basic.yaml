@@ -1,6 +1,6 @@
 name: Create DataPower yaml files
 
-on: push
+on: [push]
 
 jobs:
   DataPower_Yaml_Job1:
@@ -15,4 +15,7 @@ jobs:
       - name: Execute during failure
         if: ${{ failure() }}
         run: echo "One of the step seems failed"
+      - name: Test
+        run: echo testing
+        shell: bash
         
