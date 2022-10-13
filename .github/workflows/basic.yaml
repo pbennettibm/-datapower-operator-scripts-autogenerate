@@ -14,5 +14,5 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: Run script
         run: |
-          sh ${{ github.workspace }}/yaml-creation.sh
+          sh ./yaml-creation.sh
       - run: echo "🍏 This job's status is ${{ job.status }}."
