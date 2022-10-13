@@ -9,7 +9,7 @@ jobs:
     
     steps:
       - name: File contents
-        run: echo $(ls)
+        run: echo $ls
         shell: bash
       - name: Run a script file from repo
         if: ${{ always() }}
