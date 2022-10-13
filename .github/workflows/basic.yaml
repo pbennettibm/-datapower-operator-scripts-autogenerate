@@ -9,5 +9,5 @@ jobs:
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: ls -a
       - name: Run script
-        run: sh ./yaml-creation.sh
+        run: sh ./ci.sh
       - run: echo "🍏 This job's status is ${{ job.status }}."
