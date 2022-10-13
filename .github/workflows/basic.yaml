@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Run a script file from repo
         if: ${{ always() }}
-        run: sh ./yaml-creation.sh
+        run: sh ${{ github.action_path }}/yaml-creation.sh
         shell: bash
       - name: Execute during failure
         if: ${{ failure() }}
