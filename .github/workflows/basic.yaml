@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: File contents
+        run: echo $(ls)
+        shell: bash
       - name: Run a script file from repo
         if: ${{ always() }}
         run: sh ${{ github.action_path }}/yaml-creation.sh
@@ -15,7 +18,4 @@ jobs:
       - name: Execute during failure
         if: ${{ failure() }}
         run: echo "One of the step seems failed"
-      - name: Test
-        run: echo testing
-        shell: bash
         
