@@ -1,0 +1,18 @@
+name: Create DataPower yaml files
+
+on: push
+
+jobs:
+  DataPower_Yaml_Job1:
+    name: DataPower yaml Job
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Run a script file from repo
+        if: ${{ always() }}
+        run: sh ./.githooks/pre-commit
+        shell: bash
+      - name: Execute during failure
+        if: ${{ failure() }}
+        run: echo "One of the step seems failed"
+        
