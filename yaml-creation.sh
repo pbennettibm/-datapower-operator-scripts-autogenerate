@@ -1,6 +1,6 @@
 #!/bin/bash
 
-zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
+# zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 
 for file in *; do
   if [[ "${file: -4}" == ".zip" ]]; then
