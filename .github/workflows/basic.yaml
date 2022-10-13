@@ -7,7 +7,9 @@ jobs:
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: ls -a
+      - run: |
+        cd ${{ github.workspace }}
+        ls -a
       - name: Run script
-        run: sh ./yaml-creation.sh
+        run: sh ${{ github.workspace }}/yaml-creation.sh
       - run: echo "🍏 This job's status is ${{ job.status }}."
