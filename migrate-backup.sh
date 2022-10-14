@@ -4,7 +4,8 @@
 # Globals #
 ###########
 
-declare -a PORTARR=("https-9090" "http-8001")
+declare -a PORTARR=("https-9090" "https-7016")
+# make var for namespace
 BACKUP_ZIP=""
 UNPACK_DIR=""
 DOMAINS=()

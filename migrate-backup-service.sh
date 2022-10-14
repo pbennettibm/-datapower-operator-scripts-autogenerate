@@ -24,10 +24,10 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "360"
   name: $NAME-service
-  namespace: $NAME
+  namespace: validation-flow
 spec:
   selector:
-    app.kubernetes.io/instance: $NAME-$NAME-instance
+    app.kubernetes.io/instance: validation-flow-$NAME-instance
   ports:
 $PORTLIST
 EOF
