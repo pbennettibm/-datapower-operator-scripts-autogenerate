@@ -3,8 +3,8 @@
 ###########
 # Globals #
 ###########
-
-declare -a PORTARR=("https-9090" "https-7016")
+#"https-7016"
+declare -a PORTARR=("https-9090" "http-8001")
 NAMESPACE="validation-flow"
 
 BACKUP_ZIP=""
