@@ -2,6 +2,7 @@
 
 #define parameters which are passed in.
 NAME=$1; shift
+NAMESPACE=$1; shift
 DOMAINLIST=$@
 
 
