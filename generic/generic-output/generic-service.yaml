@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "360"
+  name: generic-service
+  namespace: validation-flow
+spec:
+  selector:
+    app.kubernetes.io/instance: validation-flow-generic-instance
+  ports:
+    - name: generic-9090
+      protocol: TCP
+      port: 9090
+      targetPort: 9090
+    - name: generic-7016
+      protocol: TCP
+      port: 7016
+      targetPort: 7016
