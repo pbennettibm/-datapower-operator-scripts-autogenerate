@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<control>  
+<!--    
+<aaa valcred="replaceDatalexValCred">
+<operation>*</operation>
+</aaa>
+
+<req-after-aaa-xform1>
+ local:///xsl/StripWS-Sec.xsl
+</req-after-aaa-xform1>
+-->
+<req-log-xform2>
+     local:///xsl/addUseridPassword_worldpay.xsl
+</req-log-xform2>
+
+
+
+
+</control>
