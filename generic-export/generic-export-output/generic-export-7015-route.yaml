@@ -1,0 +1,15 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "372"
+  name: generic-export-7015-route
+  namespace: validation-flow
+spec:
+  to:
+    kind: Service
+    name: generic-export-service
+    weight: 100
+  port:
+    targetPort: generic-export-7015
+

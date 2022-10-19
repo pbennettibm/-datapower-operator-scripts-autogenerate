@@ -1,0 +1,23 @@
+kind: Service
+apiVersion: v1
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "360"
+  name: generic-export-service
+  namespace: validation-flow
+spec:
+  selector:
+    app.kubernetes.io/instance: validation-flow-generic-export-instance
+  ports:
+    - name: generic-export-9090
+      protocol: TCP
+      port: 9090
+      targetPort: 9090
+    - name: generic-export-7016
+      protocol: TCP
+      port: 7016
+      targetPort: 7016
+    - name: generic-export-7015
+      protocol: TCP
+      port: 7015
+      targetPort: 7015
