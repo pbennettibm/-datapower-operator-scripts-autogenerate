@@ -1,0 +1,144 @@
+<xsl:stylesheet version="1.0" 
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:dp="http://www.datapower.com/extensions" 
+  extension-element-prefixes="dp" 
+  exclude-result-prefixes="dp">
+
+
+  <!--
+    This is a custom stylesheet for a AAA Authorization step.  It receives a complex bit
+    of XML (see Probe) and returns <approved/> or <declined>...</declined>.
+    
+    This template integrates closely with the setup stylesheet, which places a number of
+    bits of information in context/TahoeESB/... context variables.
+    
+    NOTE: Most of the context variable aren't very interesting, but var://context/TahoeESB/aaa has
+    already been checked to ensure that it is correct for the current operation, and it looks like
+    this:
+    
+    <aaa [ valcred="..." ]>
+      <role>...</role>
+      <operation>...</operation>
+    </aaa>
+    
+    The <operation> elements are ignored by this template.
+    
+    *** The user has already been authenticated by the time this stylesheet executes.  When the role
+    (or indeed any of the roles) is DPALL then the request is approved.  Otherwise the template fetches
+    the roles associated with the userid (via LDAP), then checks to see whether that set of roles
+    has anything in common with the set of roles in the <aaa> context variable.
+  -->
+  <xsl:template match="/">
+    
+    <xsl:variable name="serverAddress" select="'LDAP-PRD.delta.com'"/>
+    <xsl:variable name="portNumber" select="'389'"/>
+    <xsl:variable name="bindDN" select="'CN=svcdpw,OU=svcacct,DC=delta,DC=rl,DC=delta,DC=com'"/>
+    <xsl:variable name="bindPassword" select="'SVC2jT4d'"/>
+    <xsl:variable name="targetBaseDN" select="'DC=delta,DC=rl,DC=delta,DC=com'"/>
+    <xsl:variable name="attributeName" select="'memberOf'"/>
+    <xsl:variable name="aaa" select="dp:variable('var://context/ActiveMatrixESB/aaa')"/>
+    <xsl:message dp:priority="info">aaa = <xsl:copy-of select="$aaa"/></xsl:message>
+    
+    <!-- Get the user ID -->
+    <xsl:variable name="userID">
+      <xsl:variable name="CN" select="substring-after(/container/mapped-credentials/entry, 'CN=')"/>
+      <xsl:choose>
+        <xsl:when test="contains($CN, ',')">
+          <xsl:value-of select="substring-before($CN, ',')"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$CN"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:message>###UserID: <xsl:copy-of select="$userID"/>
+    </xsl:message>
+
+    <dp:set-variable name="'var://context/ldap/userID'" value="$userID"/>
+
+    <xsl:message>###UserIDVar: <xsl:copy-of select="dp:variable('var://context/ldap/userID')"/>
+    </xsl:message>
+
+    <!-- See if any of the roles associated with the user match any of the roles in the <aaa/> element. -->
+    <xsl:variable name="intersectionOfRoles">
+      
+      <xsl:choose>
+        <xsl:when test="not($aaa/aaa/role[string() = 'DPALL'])">
+          
+          <!-- None of the roles in the <aaa> are for DPALL, so fetch roles from LDAP and compare to the <aaa> roles. -->
+          <xsl:variable name="filter" select="concat('(&amp;(objectClass=user)(CN=',$userID,'))')"/>
+          <!--  <xsl:variable name="filter" select="'(&amp;(objectClass=user)(CN=svcdpw))'"/> -->
+          <xsl:variable name="sslProxyProfile" select="''"/>
+          <xsl:variable name="ldapLBGroup" select="''"/>
+          <xsl:variable name="ldapResults" select="dp:ldap-search($serverAddress, $portNumber, $bindDN, $bindPassword, $targetBaseDN, $attributeName, $filter, 'sub', $sslProxyProfile, $ldapLBGroup)"/>
+          
+          <!--
+        		Here is a sample result from dp:ldap-search():
+        		<LDAP-search-results>
+        		  <result>
+        		    <DN>CN=svcdpw,OU=svcacct,DC=delta,DC=rl,DC=delta,DC=com</DN>
+        		    <attribute-value name="memberOf">CN=SVC_Accounts,OU=Campus,OU=Delta,OU=Groups,DC=delta,DC=rl,DC=delta,DC=com</attribute-value>
+        		    <attribute-value name="memberOf">CN=DenyLocalLogon,OU=DT,OU=Groups,DC=delta,DC=rl,DC=delta,DC=com</attribute-value>
+        		  </result>
+        		</LDAP-search-results>
+      		-->
+          <!-- <xsl:message> <xsl:copy-of select="$ldapResults"/>  </xsl:message>   -->
+          <dp:set-variable name="'var://context/ldap/search-results'" value="$ldapResults"/>
+          
+          <!-- Iterate through all the memberOf elements  -->
+          <xsl:for-each select="$ldapResults/LDAP-search-results/result/attribute-value[@name='memberOf']">
+            <!-- Extract the CN from the DN.  It may be terminated either by a comma or by the end of string. -->
+            <xsl:variable name="role">
+              <xsl:variable name="CN" select="substring-after(., 'CN=')"/>
+              <xsl:choose>
+                <xsl:when test="contains($CN, ',')">
+                  <xsl:value-of select="substring-before($CN, ',')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$CN"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            <xsl:message>### comparing role '<xsl:value-of select="$role"/>' to '<xsl:value-of select="string()"/>'</xsl:message>
+            <xsl:if test="$aaa/aaa/role[string() = $role]">
+              <xsl:value-of select="'.'"/>
+            </xsl:if>
+          </xsl:for-each>
+          
+        </xsl:when>
+        <xsl:otherwise>
+          
+          <!--
+            One of the roles (perhaps the only role) is DPALL, so skip the detailed evaluation and
+            just approve this request.
+          -->
+          <xsl:value-of select="'.'"/>
+          
+        </xsl:otherwise>
+      </xsl:choose>
+      
+    </xsl:variable>
+
+    <!-- Approve or reject the request based on whether there is anything in $intersectionOfRoles. -->
+    <xsl:variable name="result">
+      <xsl:choose>
+        <xsl:when test="$intersectionOfRoles != ''">
+          <xsl:element name="approved"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:element name="declined"/>
+          <xsl:variable name="ServiceName" select="dp:variable('var://context/ActiveMatrixESB/serviceName')"/>
+          <xsl:variable name="CounterName" select="concat('/monitor-count/', $ServiceName, 'AAAFailuresCnt')"/>
+          <dp:increment-integer name="$CounterName"/>
+          <xsl:message dp:priority="info">########Counter Name: <xsl:value-of select="$CounterName"/> ####### </xsl:message>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:message>### authorization decision=<xsl:copy-of select="$result"/></xsl:message>
+
+    <xsl:copy-of select="$result"/>
+
+  </xsl:template>
+</xsl:stylesheet>
