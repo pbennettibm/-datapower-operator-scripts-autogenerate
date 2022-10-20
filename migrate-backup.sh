@@ -3,7 +3,7 @@
 ###########
 # Globals #
 ###########
-#"https-7016"
+#"https-7016" "http-7015"
 declare -a PORTARR=("https-9090" "https-7016" "http-7015")
 NAMESPACE="validation-flow"
 
