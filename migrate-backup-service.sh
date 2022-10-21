@@ -2,6 +2,7 @@
 
 #define parameters which are passed in.
 NAME=$1; shift
+NAMESPACE=$1; shift
 PORTS=$@
 
 PORTLIST=$(
@@ -24,10 +25,10 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "360"
   name: $NAME-service
-  namespace: $NAME
+  namespace: $NAMESPACE
 spec:
   selector:
-    app.kubernetes.io/instance: $NAME-$NAME-instance
+    app.kubernetes.io/instance: $NAMESPACE-$NAME-instance
   ports:
 $PORTLIST
 EOF

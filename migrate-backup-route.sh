@@ -2,8 +2,9 @@
 
 #define parameters which are passed in.
 NAME=$1
-TLSBOOL=$2
-PORT=$3
+NAMESPACE=$2
+TLSBOOL=$3
+PORT=$4
 
 TLSENABLED=$(
     if [ "$TLSBOOL" = "https" ]; then
@@ -21,7 +22,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "370"
   name: $NAME-$PORT-route
-  namespace: $NAME
+  namespace: $NAMESPACE
 spec:
   to:
     kind: Service
