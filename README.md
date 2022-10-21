@@ -137,8 +137,10 @@ oc create secret generic datapower-user --from-literal=password=admin
 8. (Optional) If using your own exported zip file, edit the "PORTARR" variable at the top of 'migrate-backup.sh' with the ports you need to expose.
 
 - Each port must either follow the naming convention of "http-<port>" or "https-<port>".
-- Port 9090 is exposed for the DataPower UI.
+- Port "https-9090" is exposed for the DataPower UI.
 - You may choose to remove if you want, as using the DataPower UI outside of testing purposes on OpenShift is an anti-pattern.
+- Port "http-8001" is exposed for the "validation-flow" JSON Placeholder route.
+- You should remove this route if you are not using the "validation-flow.zip"
 
 9. Add and commit a DataPower exported zip file to this repository.
 
