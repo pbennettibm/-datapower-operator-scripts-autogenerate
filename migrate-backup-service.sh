@@ -2,14 +2,18 @@
 
 #define parameters which are passed in.
 NAME=$1; shift
+NAMESPACE=$1; shift
 PORTS=$@
 
 PORTLIST=$(
+  local port_split
   for PORT in {$PORTS}; do
-    echo "    - name: $NAME-$PORT";
+    IFS='-' read -ra port_split <<< "$PORT"
+
+    echo "    - name: $NAME-${port_split[1]}";
     echo "      protocol: TCP";
-    echo "      port: $PORT";
-    echo "      targetPort: $PORT";
+    echo "      port: ${port_split[1]}";
+    echo "      targetPort: ${port_split[1]}";
   done;
 )
 
@@ -21,10 +25,10 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "360"
   name: $NAME-service
-  namespace: $NAME
+  namespace: $NAMESPACE
 spec:
   selector:
-    app.kubernetes.io/instance: $NAME-$NAME-instance
+    app.kubernetes.io/instance: $NAMESPACE-$NAME-instance
   ports:
 $PORTLIST
 EOF
