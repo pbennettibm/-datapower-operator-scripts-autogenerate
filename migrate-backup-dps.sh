@@ -9,14 +9,16 @@ DOMAINLIST=$@
 INDVDOMAIN=$(
   for DOMAIN in {$DOMAINLIST}; do
     echo "    - name: $DOMAIN"
-    echo "      #certs:"
-    echo "      #- certType: usrcerts"
-    echo "        #secret: $DOMAIN-cert"
     echo "      dpApp:"
     echo "        config:"
     echo "        - $DOMAIN-cfg"
     echo "        local:"
     echo "        - $DOMAIN-local"
+    echo "      #certs:"
+    echo "      #- certType: usrcerts"
+    echo "        #secret: $DOMAIN-certs"
+    echo "      #- certType: sharedcerts"
+    echo "        #secret: $DOMAIN-sharedcerts"
   done;
 )
 
