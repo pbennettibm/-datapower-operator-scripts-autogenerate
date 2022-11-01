@@ -25,11 +25,11 @@
 - Then depending on your OS:
   - Mac/Linux
     ```
-    chmod ug+x .githooks/pre-commit migrate-backup-dps.sh migrate-backup-route.sh migrate-backup-service.sh
+    chmod ug+x .githooks/pre-commit .githooks/post-commit migrate-backup-dps.sh migrate-backup-route.sh migrate-backup-service.sh
     ```
   - Windows
     ```
-    icacls .githooks/pre-commit migrate-backup-dps.sh migrate-backup-route.sh migrate-backup-service.sh /grant *S-1-1-0:F
+    icacls .githooks/pre-commit .githooks/post-commit migrate-backup-dps.sh migrate-backup-route.sh migrate-backup-service.sh /grant *S-1-1-0:F
     ```
     _Note: You may have to use the full path on Windows to correctly authorize the hook to run. We haven't had the ability to test this yet._
 
