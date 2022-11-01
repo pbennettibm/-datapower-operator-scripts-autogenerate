@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "360"
+  name: generic-full-export-service
+  namespace: validation-flow
+spec:
+  selector:
+    app.kubernetes.io/instance: validation-flow-generic-full-export-instance
+  ports:
+    - name: generic-full-export-
+      protocol: TCP
+      port: 
+      targetPort: 
+    - name: generic-full-export-
+      protocol: TCP
+      port: 
+      targetPort: 
