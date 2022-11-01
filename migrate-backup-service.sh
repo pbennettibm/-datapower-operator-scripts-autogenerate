@@ -6,10 +6,9 @@ NAMESPACE=$1; shift
 PORTS=$@
 
 PORTLIST=$(
-  local port_split
-  local ifs
+  local port_split_local
   for PORT in {$PORTS}; do
-    ifs='-' read -ra port_split <<< "$PORT"
+    IFS='-' read -ra port_split_local <<< "$PORT"
 
     echo "    - name: $NAME-${port_split[1]}";
     echo "      protocol: TCP";
