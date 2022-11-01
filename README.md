@@ -12,9 +12,11 @@
 
 3. If running on a newly created OC, make sure you also install [unzip](https://www.google.com/search?q=install+unzip)
 
-4. If running on Linux, switch to the linux-sed-fix branch.
+4. If you are not working with the "validation-flow.zip" and you wish to enable the UI or other interfaces, please return to the [datapower-local-dev](https://github.com/dal-datapower/datapower-local-dev) repo to add the "default" domain.
 
-- `git checkout linux-sed-fix`
+- After you import your custom zip file with the UI, make sure to save your configuration in both the UI and the terminal.
+- Then export your zip file again but with the default domain in addition to the configuration you want for deployment.
+- This will enable the UI by default.
 
 5. Config the git pre-commit hook to run scripts.
 
