@@ -21,6 +21,7 @@ for file in $zipfiles; do
   fi
 done
 
+git add .
 # For GitOps interaction with the multi-tenancy-gitops-apps repo
 # Comment this section out if not using GitOps
 
