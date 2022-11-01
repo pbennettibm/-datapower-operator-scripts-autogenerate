@@ -6,7 +6,7 @@ NAMESPACE=$1; shift
 DOMAINLIST=$@
 
 
-individual_domain() {
+INDVDOMAIN=$(
   for DOMAIN in {$DOMAINLIST}; do
     echo "    - name: $DOMAIN"
     echo "      #certs:"
@@ -18,7 +18,7 @@ individual_domain() {
     echo "        local:"
     echo "        - $DOMAIN-local"
   done;
-}
+)
 
 #define the template.
 cat  << EOF
@@ -40,5 +40,5 @@ spec:
     accessLevel: privileged
     passwordSecret: datapower-user
   domains:
-$individual_domain
+$INDVDOMAIN
 EOF
