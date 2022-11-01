@@ -7,8 +7,9 @@ PORTS=$@
 
 PORTLIST=$(
   local port_split
+  local ifs
   for PORT in {$PORTS}; do
-    local IFS='-' read -ra port_split <<< "$PORT"
+    ifs='-' read -ra port_split <<< "$PORT"
 
     echo "    - name: $NAME-${port_split[1]}";
     echo "      protocol: TCP";
