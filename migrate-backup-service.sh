@@ -5,7 +5,7 @@ NAME=$1; shift
 NAMESPACE=$1; shift
 PORTS=$@
 
-portlist() {
+PORTLIST=$(
   local port_split_local
   for PORT in {$PORTS}; do
     IFS='-' read -ra port_split_local <<< "$PORT"
@@ -15,7 +15,7 @@ portlist() {
     echo "      port: ${port_split[1]}";
     echo "      targetPort: ${port_split[1]}";
   done;
-}
+)
 
 #define the template.
 cat  << EOF
@@ -30,5 +30,5 @@ spec:
   selector:
     app.kubernetes.io/instance: $NAMESPACE-$NAME-instance
   ports:
-$(portlist)
+$PORTLIST
 EOF
