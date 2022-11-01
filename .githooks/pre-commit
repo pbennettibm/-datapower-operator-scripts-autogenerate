@@ -10,9 +10,13 @@ for file in $zipfiles; do
 
     echo "extracting resources from ${file}.zip"
     ./migrate-backup.sh $file.zip
-    sed -i 's/[{}]//g' ./$file/$file-output/$file-dps.yaml
-    sed -i 's/[{}]//g' ./$file/$file-output/$file-service.yaml
-    # git add $file
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+      sed -i 's/[{}]//g' ./$file/$file-output/$file-dps.yaml
+      sed -i 's/[{}]//g' ./$file/$file-output/$file-service.yaml
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+      sed -i '' 's/[{}]//g' ./$file/$file-output/$file-dps.yaml
+      sed -i '' 's/[{}]//g' ./$file/$file-output/$file-service.yaml
+    fi
   else
     if [ -d "${file}" ] ; then
       rm -r $file
@@ -107,4 +111,3 @@ for file in $yamlfiles; do
 done
 
 touch .commit
-echo $OSTYPE
