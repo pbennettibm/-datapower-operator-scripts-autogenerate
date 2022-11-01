@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<control>
+	<!-- *************************************************************** -->
+	<!--
+    These initial entries are required, and MAY NOT occur in normal
+    service definition files.
+  -->
+	<!-- *************************************************************** -->
+	<!-- Whether to print debug messages from the setup stylesheet itself. -->
+	<debugMe>
+    true
+  </debugMe>
+	<!-- Main name of context - e.g. var://context/ActiveMatrixESB/... -->
+	<contextName>
+    var://context/ActiveMatrixESB/
+  </contextName>
+	<!-- BackEndHost that used to be specified as a stylesheet parameter. -->
+	<backendHost>
+    webservicesa-si.delta.com
+  </backendHost>
+	<transportProtocol>
+    https://
+  </transportProtocol>
+  	<httpPort>
+    8002
+  </httpPort>
+    	<httpsPort>
+    8000
+  </httpsPort>
+
+	
+	<defaultAAA>
+    aaaSkip
+  </defaultAAA>
+	<!-- *************************************************************** -->
+	<!--
+    These defaults match the code in the setup stylesheet.  When a new
+    bit of code is added to the setup stylesheet then add the appropriate
+    default value here.
+  -->
+	<!-- *************************************************************** -->
+	<debug-xform1>
+    local:///xsl/debugLoging.xsl
+  </debug-xform1>
+  
+	<req-xform1>
+    store:///identity.xsl
+  </req-xform1>
+  
+	<req-log-xform1>
+    local:///xsl/reqLogging-withFilter.xsl
+  </req-log-xform1>
+ 
+<!-- 
+	<req-log-xform2>
+    local:///xsl/loggingbeforeOutpout-withFilter.xsl
+  </req-log-xform2> 
+-->
+  
+<req-log-xform2>
+     store:///identity.xsl 
+      <!--local:///xsl/splLogging.xsl-->
+  </req-log-xform2>
+
+  <req-stat-xform1>
+    local:///xsl/StatsProcessing.xsl
+  </req-stat-xform1>
+
+<!--  	<req-stat-xform1>
+    local:///xsl/reqStatsEMS.xsl
+  </req-stat-xform1> -->
+
+  
+  	<req-soap-action-xform1>
+    local:///xsl/SOAPAction.xsl
+  </req-soap-action-xform1>
+  
+  	<req-after-aaa-xform1>
+    store:///identity.xsl
+  </req-after-aaa-xform1>
+  
+<!-- ****************FAULT************************************** -->
+  	<fault-stat-xform1>
+    local:///xsl/AMXrespStats.xsl
+  </fault-stat-xform1>
+  
+	<fault-log-xform1>
+    local:///xsl/faultLogging-withFilter.xsl
+  </fault-log-xform1>
+  
+	<fault-xform1>
+    store:///identity.xsl
+  </fault-xform1>
+  
+<!-- ****************SOAP************************************** -->    
+	<soap-stat-xform1>
+    local:///xsl/AMXrespStats.xsl
+  </soap-stat-xform1>
+  
+	<soap-log-xform1>
+    local:///xsl/soapLogging-withFilter.xsl
+  </soap-log-xform1>
+  
+	<soap-xform1>
+    store:///identity.xsl
+  </soap-xform1>
+  
+<!-- ****************NON-SOAP RESP************************* -->      
+  	<resp-log-xform1>
+    local:///xsl/respLogging-withFilter.xsl
+  </resp-log-xform1>
+  
+	<resp-stat-xform1>
+    local:///xsl/AMXrespStats.xsl
+  </resp-stat-xform1>
+
+	<resp-xform1>
+    store:///identity.xsl
+  </resp-xform1>
+  
+ 	<resp-xform2>
+    store:///identity.xsl
+  </resp-xform2>
+
+<!-- ****************ERR************************************** -->       
+	<err-stat-xform1>
+    store:///identity.xsl
+  </err-stat-xform1>
+
+	<err-log-xform1>
+    local:///xsl/errLogging-withFilter.xsl
+  </err-log-xform1>
+  
+	<err-xform1>
+    store:///identity.xsl
+  </err-xform1>
+
+</control>
