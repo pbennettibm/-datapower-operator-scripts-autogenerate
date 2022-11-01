@@ -1,0 +1,17 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "370"
+  name: generic-full-export-9090-route
+  namespace: validation-flow
+spec:
+  to:
+    kind: Service
+    name: generic-full-export-service
+    weight: 100
+  port:
+    targetPort: generic-full-export-9090
+  tls:
+    termination: passthrough
+  wildcardPolicy: None
