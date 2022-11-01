@@ -21,6 +21,7 @@ for file in $zipfiles; do
   fi
 done
 
+git add .
 # For GitOps interaction with the multi-tenancy-gitops-apps repo
 # Comment this section out if not using GitOps
 
@@ -29,30 +30,30 @@ yamlfiles=`git diff HEAD --name-only | grep -E '.yaml'`
 cd ..
 
 for file in $yamlfiles; do
-  if [[ -f "./datapower-operator-scripts/${file}" ]]; then
+  if [[ -f "./datapower-operator-scripts-autogenerate/${file}" ]]; then
     if [[ "$file" == *-dps* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
-      yes | cp -f "./datapower-operator-scripts/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/
+      yes | cp -f "./datapower-operator-scripts-autogenerate/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/datapower/${array[2]} created"
       echo -e "- datapower/${array[2]}" >> ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
     elif [[ "$file" == *-service* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
-      yes | cp -f "./datapower-operator-scripts/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/
+      yes | cp -f "./datapower-operator-scripts-autogenerate/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/service/${array[2]} created"
       echo -e "- service/${array[2]}" >> ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
     elif [[ "$file" == *-route* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
-      yes | cp -f "./datapower-operator-scripts/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/
+      yes | cp -f "./datapower-operator-scripts-autogenerate/${file}" ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/route/${array[2]} created"
       echo -e "- route/${array[2]}" >> ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
     elif [[ "$file" == *-cfg* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
-      yes | cp -f "./datapower-operator-scripts/${file}" "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[2]}"
+      yes | cp -f "./datapower-operator-scripts-autogenerate/${file}" "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[2]}"
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[2]} created"
       echo -e "- configmap/${array[2]}" >> ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
     elif [[ "$file" == *-local* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
-      yes | cp -f "./datapower-operator-scripts/${file}" "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[2]}"
+      yes | cp -f "./datapower-operator-scripts-autogenerate/${file}" "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[2]}"
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[2]} created"
       echo -e "- configmap/${array[2]}" >> ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
     fi

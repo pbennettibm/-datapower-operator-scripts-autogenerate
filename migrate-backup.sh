@@ -4,9 +4,9 @@
 # Globals #
 ###########
 
-# "5611" - updated flow port for v2
+NAMESPACE="validation-flow"
+declare -a PORTARR=("https-9090" "http-8001")
 
-declare -a PORTARR=("9090" "8001")
 BACKUP_ZIP=""
 UNPACK_DIR=""
 DOMAINS=()
@@ -75,12 +75,12 @@ initialize_defaults() {
 validate_backup_fs() {
     if [[ ! -f "${UNPACK_DIR}/export.xml" ]]; then
         echo "expected to find ${UNPACK_DIR}/export.xml"
-        error "${BACKUP_ZIP} does not appear to be a well-formed backup ZIP - aborting"
+        error "${BACKUP_ZIP} does not appear to be a well-formed backup ZIP - missing export.xml - aborting"
     fi
 
     if [[ ! $(find $UNPACK_DIR -name '*.zip' | wc -l) -gt 0 ]]; then
         echo "expected to find domain ZIP file(s) in ${UNPACK_DIR}"
-        error "${BACKUP_ZIP} does not appear to be a well-formed backup ZIP - aborting"
+        error "${BACKUP_ZIP} does not appear to be a well-formed backup ZIP - missing domain - aborting"
     fi
 }
 
@@ -234,14 +234,18 @@ change_domains_case() {
 }
 
 create_yamls() {
-    ./migrate-backup-dps.sh ${BACKUP_ZIP%.*} "${DOMAINS[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml
+    local port_split
+
+    ./migrate-backup-dps.sh ${BACKUP_ZIP%.*} $NAMESPACE "${DOMAINS[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml
     echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml created"
-    ./migrate-backup-service.sh ${BACKUP_ZIP%.*} "${PORTARR[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml
+    ./migrate-backup-service.sh ${BACKUP_ZIP%.*} $NAMESPACE "${PORTARR[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml
     echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml created"
     for port in "${PORTARR[@]}"; do
-        ./migrate-backup-route.sh ${BACKUP_ZIP%.*} "$port" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml
-        echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml created"
-        sed -i "s/370/${ROUTE_SYNC_WAVE_COUNT}/g" $OUTPUT_DIR/${BACKUP_ZIP%.*}-"$port"-route.yaml
+        IFS='-' read -ra port_split <<< "$port"
+        
+        ./migrate-backup-route.sh ${BACKUP_ZIP%.*} $NAMESPACE "${port_split[0]}" "${port_split[1]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"${port_split[1]}"-route.yaml
+        echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"${port_split[1]}"-route.yaml created"
+        sed -i "s/370/${ROUTE_SYNC_WAVE_COUNT}/g" $OUTPUT_DIR/${BACKUP_ZIP%.*}-"${port_split[1]}"-route.yaml
         ((ROUTE_SYNC_WAVE_COUNT+=1))
     done;
 }
