@@ -12,17 +12,14 @@ for file in $zipfiles; do
     ./migrate-backup.sh $file.zip
     sed -i 's/[{}]//g' ./$file/$file-output/$file-dps.yaml
     sed -i 's/[{}]//g' ./$file/$file-output/$file-service.yaml
-    git add $file
+    # git add $file
   else
     if [ -d "${file}" ] ; then
       rm -r $file
-      git rm -r $file
+      # git rm -r $file
     fi
   fi
 done
-
-git status
-#  git add .
 
 # For GitOps interaction with the multi-tenancy-gitops-apps repo
 # Comment this section out if not using GitOps
@@ -109,3 +106,4 @@ git status
 #    fi
 #  done
 #  
+touch .commit 
