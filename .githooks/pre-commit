@@ -25,6 +25,7 @@ for file in $zipfiles; do
   fi
 done
 
+touch .commit
 # For GitOps interaction with the multi-tenancy-gitops-apps repo
 # Comment this section out if not using GitOps
 
@@ -109,5 +110,3 @@ for file in $yamlfiles; do
     fi 
   fi
 done
-
-touch .commit
