@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<control>  
+   <!-- <sign request="yes"/> -->
+    
+    <!--<aaa valcred="eProxyGoogleValCred">
+        <operation>*</operation>
+    </aaa>-->
+   <req-after-aaa-xform1>
+       local:///xsl/StripWS-Sec.xsl
+   </req-after-aaa-xform1>
+
+
+<req-log-xform2>
+     local:///xsl/addRouteToGoogleIta.xsl
+</req-log-xform2>
+
+<!--<transportProtocol>
+    https://
+</transportProtocol>
+
+<backendPort>443</backendPort>
+<backendHost>partner-client.google.com</backendHost>
+<backendURI>/travel/boombox/test/configs/services/xml</backendURI>-->
+
+
+
+
+</control>
