@@ -1,0 +1,23 @@
+kind: Service
+apiVersion: v1
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "360"
+  name: deploy-generic-11152022-service
+  namespace: datapowermvp
+spec:
+  selector:
+    app.kubernetes.io/instance: datapowermvp-deploy-generic-11152022-instance
+  ports:
+    - name: deploy-generic-11152022-9090
+      protocol: TCP
+      port: 9090
+      targetPort: 9090
+    - name: deploy-generic-11152022-7016
+      protocol: TCP
+      port: 7016
+      targetPort: 7016
+    - name: deploy-generic-11152022-7015
+      protocol: TCP
+      port: 7015
+      targetPort: 7015

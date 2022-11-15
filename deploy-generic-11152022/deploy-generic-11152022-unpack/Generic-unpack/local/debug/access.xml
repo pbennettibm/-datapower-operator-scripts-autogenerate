@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<access>
+	<vendor OU="soacoetest" intApplicationId="intTest1"/>
+	<vendor OU="extTest2" intApplicationId="intTest2"/>
+	<vendor OU="extTest3" intApplicationId="intTest3"/>
+</access>
